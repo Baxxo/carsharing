@@ -17,6 +17,8 @@ public class ConnectionMySql {
 	static String sql;
 	int r;
 	public static ArrayList<Socio> s = new ArrayList<Socio>();
+	public static ArrayList<Auto> a = new ArrayList<Auto>();
+	public static ArrayList<Noleggio> n = new ArrayList<Noleggio>();
 
 	public static void Connection() throws SQLException {
 
@@ -28,14 +30,9 @@ public class ConnectionMySql {
 			System.err.println(e.getMessage());
 		} // fine try-catch
 
-		try {
-			System.out.println(new java.io.File("src").getCanonicalPath());
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
 		cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/carsharing?user=root&password=");
+
+		// SELECT Soci
 
 		sql = "SELECT * FROM `soci`";
 
@@ -49,7 +46,39 @@ public class ConnectionMySql {
 			}
 		} catch (SQLException e) {
 			System.out.println("errore:" + e.getMessage());
-		} // fine try-catch
+		}
+
+		// SELECT Auto
+
+		sql = "SELECT * FROM `auto`";
+
+		try {
+			st = cn.createStatement();
+			rs = st.executeQuery(sql);
+			while (rs.next() == true) {
+				System.out.println(rs.getString("cf"));
+				a.add(new Auto(rs.getString("targa"), rs.getString("marca"), rs.getString("modello"),
+						Integer.parseInt(rs.getString("costo_giornaliero"))));
+			}
+		} catch (SQLException e) {
+			System.out.println("errore:" + e.getMessage());
+		}
+
+		// SELECT Noleggi
+
+		sql = "SELECT * FROM `noleggi`";
+
+		try {
+			st = cn.createStatement();
+			rs = st.executeQuery(sql);
+			while (rs.next() == true) {
+				System.out.println(rs.getString("cf"));
+				n.add(new Noleggio(rs.getInt("codice_noleggio"), rs.getString("auto"),
+						rs.getString("socio"), rs.getDate("inizio"), rs.getDate("fine"), rs.getBoolean("auto_restituita")));
+			}
+		} catch (SQLException e) {
+			System.out.println("errore:" + e.getMessage());
+		}
 
 	}// fine main
 }// fine classe

@@ -10,6 +10,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Label;
 
 public class Main {
 
@@ -58,15 +59,22 @@ public class Main {
 		}
 		
 		shell = new Shell();
-		shell.setSize(450, 300);
+		shell.setSize(939, 500);
 		shell.setText("Car Sharing");
 		
 		list = new List(shell, SWT.BORDER);
-		list.setBounds(219, 27, 205, 225);
+		list.setBounds(10, 71, 205, 225);
+		
+		Label lblElencoSoci = new Label(shell, SWT.NONE);
+		lblElencoSoci.setAlignment(SWT.CENTER);
+		lblElencoSoci.setBounds(10, 43, 205, 15);
+		lblElencoSoci.setText("Elenco soci");
 		
 		for(int i=0;i<con.s.size();i++){
-			list.add(con.s.get(i).cf);	
+			list.add(con.s.get(i).nome);	
 		}
+		
+		//String changedUserString = userString.replace("'","''");
 	
 	}
 }
