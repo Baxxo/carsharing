@@ -16,10 +16,6 @@ public class Socio {
 		this.telefono=telefono;
 	}
 	
-	public Socio(){
-		
-	}
-
 	public String getCf() {
 		return cf;
 	}

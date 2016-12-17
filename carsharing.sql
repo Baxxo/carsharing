@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Creato il: Dic 17, 2016 alle 10:59
+-- Creato il: Dic 17, 2016 alle 12:37
 -- Versione del server: 10.1.13-MariaDB
 -- Versione PHP: 7.0.5
 
@@ -64,7 +64,11 @@ CREATE TABLE `noleggi` (
 
 INSERT INTO `noleggi` (`codice_noleggio`, `auto`, `socio`, `inizio`, `fine`, `auto_restituita`) VALUES
 (1, 'AB009FG', 'RSSMRA19T54A000Z', '2015-12-23', '2016-01-03', 1),
-(2, 'AB009FG', 'RSSMRA19T54A000Z', '2016-04-15', '2016-04-30', 1);
+(2, 'AB009FG', 'RSSMRA19T54A000Z', '2016-04-15', '2016-04-30', 1),
+(3, 'BB333EE', 'BNCLGO68B80E111T', '2016-01-20', '2016-01-25', 1),
+(4, 'BB333EE', 'RSSMRA19T54A000Z', '2016-10-03', '2016-11-01', 1),
+(5, 'BB333EE', 'VRDNNA41C66S456W', '2016-12-02', '2016-12-10', 0),
+(6, 'AA222DS', 'RSSMRA19T54A000Z', '2017-02-10', '2017-02-15', 0);
 
 -- --------------------------------------------------------
 
@@ -121,7 +125,7 @@ ALTER TABLE `soci`
 -- AUTO_INCREMENT per la tabella `noleggi`
 --
 ALTER TABLE `noleggi`
-  MODIFY `codice_noleggio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `codice_noleggio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
