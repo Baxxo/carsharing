@@ -1,6 +1,5 @@
 package Carrozeria;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -8,19 +7,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import com.mysql.fabric.xmlrpc.base.Array;
-
 public class ConnectionMySql {
 	static Connection cn;
 	static Statement st;
 	static ResultSet rs;
 	static String sql;
-	int r;
-	public static ArrayList<Socio> s = new ArrayList<Socio>();
-	public static ArrayList<Auto> a = new ArrayList<Auto>();
-	public static ArrayList<Noleggio> n = new ArrayList<Noleggio>();
+	public ArrayList<Socio> s = new ArrayList<Socio>();
+	public ArrayList<Auto> a = new ArrayList<Auto>();
+	public ArrayList<Noleggio> n = new ArrayList<Noleggio>();
 
-	public static void Connection() throws SQLException {
+	public void Connection() throws SQLException {
 
 		// ________________________________connessione
 		try {
@@ -40,7 +36,6 @@ public class ConnectionMySql {
 			st = cn.createStatement();
 			rs = st.executeQuery(sql);
 			while (rs.next() == true) {
-				System.out.println(rs.getString("cf"));
 				s.add(new Socio(rs.getString("cf"), rs.getString("cognome"), rs.getString("nome"),
 						rs.getString("indirizzo"), rs.getString("telefono")));
 			}
@@ -56,9 +51,7 @@ public class ConnectionMySql {
 			st = cn.createStatement();
 			rs = st.executeQuery(sql);
 			while (rs.next() == true) {
-				System.out.println(rs.getString("cf"));
-				a.add(new Auto(rs.getString("targa"), rs.getString("marca"), rs.getString("modello"),
-						Integer.parseInt(rs.getString("costo_giornaliero"))));
+				a.add(new Auto(rs.getString("targa"), rs.getString("marca"), rs.getString("modello"),rs.getInt("costo_giornaliero")));
 			}
 		} catch (SQLException e) {
 			System.out.println("errore:" + e.getMessage());
@@ -72,9 +65,8 @@ public class ConnectionMySql {
 			st = cn.createStatement();
 			rs = st.executeQuery(sql);
 			while (rs.next() == true) {
-				System.out.println(rs.getString("cf"));
-				n.add(new Noleggio(rs.getInt("codice_noleggio"), rs.getString("auto"),
-						rs.getString("socio"), rs.getDate("inizio"), rs.getDate("fine"), rs.getBoolean("auto_restituita")));
+				n.add(new Noleggio(rs.getInt("codice_noleggio"), rs.getString("auto"), rs.getString("socio"),
+						rs.getDate("inizio"), rs.getDate("fine"), rs.getBoolean("auto_restituita")));
 			}
 		} catch (SQLException e) {
 			System.out.println("errore:" + e.getMessage());
