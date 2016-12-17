@@ -8,12 +8,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import com.mysql.fabric.xmlrpc.base.Array;
+
 public class ConnectionMySql {
 	static Connection cn;
 	static Statement st;
 	static ResultSet rs;
 	static String sql;
 	int r;
+	public static ArrayList<Socio> s = new ArrayList<Socio>();
 
 	public static void Connection() throws SQLException {
 
@@ -33,14 +36,16 @@ public class ConnectionMySql {
 		}
 
 		cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/carsharing?user=root&password=");
-		
-		sql =" SELECT * FROM 'soci'";
+
+		sql = "SELECT * FROM `soci`";
 
 		try {
 			st = cn.createStatement();
 			rs = st.executeQuery(sql);
 			while (rs.next() == true) {
 				System.out.println(rs.getString("cf"));
+				s.add(new Socio(rs.getString("cf"), rs.getString("cognome"), rs.getString("nome"),
+						rs.getString("indirizzo"), rs.getString("telefono")));
 			}
 		} catch (SQLException e) {
 			System.out.println("errore:" + e.getMessage());
