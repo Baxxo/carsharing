@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Creato il: Dic 17, 2016 alle 10:44
+-- Creato il: Dic 17, 2016 alle 10:59
 -- Versione del server: 10.1.13-MariaDB
 -- Versione PHP: 7.0.5
 
@@ -33,6 +33,16 @@ CREATE TABLE `auto` (
   `costo_giornaliero` decimal(6,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dump dei dati per la tabella `auto`
+--
+
+INSERT INTO `auto` (`targa`, `marca`, `modello`, `costo_giornaliero`) VALUES
+('AA222DS', 'FIAT', '500', '27.00'),
+('AB009FG', 'SEAT', 'IBIZA', '25.00'),
+('BB333EE', 'FORD', 'ESPACE', '50.00'),
+('BC111KL', 'SEAT', 'LEON', '30.00');
+
 -- --------------------------------------------------------
 
 --
@@ -42,11 +52,19 @@ CREATE TABLE `auto` (
 CREATE TABLE `noleggi` (
   `codice_noleggio` int(11) NOT NULL,
   `auto` varchar(10) NOT NULL,
-  `socio` varchar(10) NOT NULL,
+  `socio` varchar(16) NOT NULL,
   `inizio` date NOT NULL,
   `fine` date NOT NULL,
   `auto_restituita` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dump dei dati per la tabella `noleggi`
+--
+
+INSERT INTO `noleggi` (`codice_noleggio`, `auto`, `socio`, `inizio`, `fine`, `auto_restituita`) VALUES
+(1, 'AB009FG', 'RSSMRA19T54A000Z', '2015-12-23', '2016-01-03', 1),
+(2, 'AB009FG', 'RSSMRA19T54A000Z', '2016-04-15', '2016-04-30', 1);
 
 -- --------------------------------------------------------
 
@@ -95,6 +113,15 @@ ALTER TABLE `noleggi`
 ALTER TABLE `soci`
   ADD PRIMARY KEY (`cf`);
 
+--
+-- AUTO_INCREMENT per le tabelle scaricate
+--
+
+--
+-- AUTO_INCREMENT per la tabella `noleggi`
+--
+ALTER TABLE `noleggi`
+  MODIFY `codice_noleggio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
