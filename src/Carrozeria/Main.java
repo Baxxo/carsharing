@@ -14,15 +14,18 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.custom.TableCursor;
+import org.eclipse.wb.swt.SWTResourceManager;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 
 public class Main {
 
 	protected Shell shlCarSharing;
 	private ConnectionMySql con = new ConnectionMySql();
-	private Table table;
-	private Table table_1;
-	private Table table_2;
-	TableItem item;
+	String select;
+	List list;
+	List list_1;
+	List list_2;
 
 	/**
 	 * Launch the application.
@@ -64,162 +67,66 @@ public class Main {
 		}
 
 		shlCarSharing = new Shell();
-		shlCarSharing.setSize(1100, 770);
+		shlCarSharing.setSize(1382, 770);
 		shlCarSharing.setText("Car Sharing");
 
-		Label lblSelect = new Label(shlCarSharing, SWT.NONE);
-		lblSelect.setBounds(417, 253, 624, 15);
-		lblSelect.setText("select");
+		Label lblSelect = new Label(shlCarSharing, SWT.BORDER | SWT.WRAP | SWT.SHADOW_IN | SWT.CENTER);
+		lblSelect.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.BOLD));
+		lblSelect.setBounds(10, 677, 212, 44);
 
-		Label lblElencoSoci = new Label(shlCarSharing, SWT.NONE);
+		Label lblElencoSoci = new Label(shlCarSharing, SWT.BORDER | SWT.WRAP | SWT.SHADOW_IN | SWT.CENTER);
 		lblElencoSoci.setAlignment(SWT.CENTER);
-		lblElencoSoci.setBounds(10, 10, 525, 15);
+		lblElencoSoci.setBounds(10, 10, 212, 28);
 		lblElencoSoci.setText("Elenco soci");
 
-		Label lblElencoAuto = new Label(shlCarSharing, SWT.NONE);
+		Label lblElencoAuto = new Label(shlCarSharing, SWT.BORDER | SWT.WRAP | SWT.SHADOW_IN | SWT.CENTER);
 		lblElencoAuto.setText("Elenco auto");
 		lblElencoAuto.setAlignment(SWT.CENTER);
-		lblElencoAuto.setBounds(10, 219, 550, 28);
+		lblElencoAuto.setBounds(10, 232, 212, 28);
 
-		Label lblElencoNoleggi = new Label(shlCarSharing, SWT.NONE);
+		Label lblElencoNoleggi = new Label(shlCarSharing, SWT.BORDER | SWT.WRAP | SWT.CENTER);
 		lblElencoNoleggi.setText("Elenco noleggi");
 		lblElencoNoleggi.setAlignment(SWT.CENTER);
-		lblElencoNoleggi.setBounds(528, 10, 525, 15);
-
-		table = new Table(shlCarSharing, SWT.BORDER | SWT.FULL_SELECTION);
-		table.setBounds(10, 251, 384, 225);
-		table.setHeaderVisible(true);
-		table.setLinesVisible(true);
-
-		TableColumn tblclmnTarga = new TableColumn(table, SWT.NONE);
-		tblclmnTarga.setWidth(100);
-		tblclmnTarga.setText("targa");
-
-		TableColumn tblclmnMarca = new TableColumn(table, SWT.NONE);
-		tblclmnMarca.setWidth(100);
-		tblclmnMarca.setText("marca");
-
-		TableColumn tblclmnModello = new TableColumn(table, SWT.NONE);
-		tblclmnModello.setWidth(100);
-		tblclmnModello.setText("modello");
-
-		TableColumn tblclmnCosto = new TableColumn(table, SWT.NONE);
-		tblclmnCosto.setWidth(63);
-		tblclmnCosto.setText("costo");
-
-		for (int i = 0; i < con.a.size(); i++) {
-			item = new TableItem(table, SWT.NONE);
-			item.setText(0, con.a.get(i).targa);
-			item.setText(1, con.a.get(i).marca);
-			item.setText(2, con.a.get(i).modello);
-			item.setText(3, String.valueOf(con.a.get(i).costo));
-		}
-
-		table.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event event) {
-				if (event.detail == SWT.CHECK) {
-					lblSelect.setText("You checked " + event.item);
-				} else {
-					lblSelect.setText("You selected " + event.item);
-				}
+		lblElencoNoleggi.setBounds(10, 452, 212, 26);
+		
+		list = new List(shlCarSharing, SWT.BORDER | SWT.V_SCROLL);
+		list.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				lblSelect.setText(list.getItem(list.getSelectionIndex()));
 			}
 		});
-
-		table_1 = new Table(shlCarSharing, SWT.BORDER | SWT.FULL_SELECTION);
-		table_1.setBounds(558, 31, 520, 182);
-		table_1.setHeaderVisible(true);
-		table_1.setLinesVisible(true);
-
-		TableColumn tblclmnCodicenoleggio = new TableColumn(table_1, SWT.NONE);
-		tblclmnCodicenoleggio.setWidth(100);
-		tblclmnCodicenoleggio.setText("codice_noleggio");
-
-		TableColumn tblclmnAuto = new TableColumn(table_1, SWT.NONE);
-		tblclmnAuto.setWidth(100);
-		tblclmnAuto.setText("auto");
-
-		TableColumn tblclmnSocio = new TableColumn(table_1, SWT.NONE);
-		tblclmnSocio.setWidth(100);
-		tblclmnSocio.setText("socio");
-
-		TableColumn tblclmnInizio = new TableColumn(table_1, SWT.NONE);
-		tblclmnInizio.setWidth(77);
-		tblclmnInizio.setText("inizio");
-
-		TableColumn tblclmnFine = new TableColumn(table_1, SWT.NONE);
-		tblclmnFine.setWidth(71);
-		tblclmnFine.setText("fine");
-
-		TableColumn tblclmnAutorestituita = new TableColumn(table_1, SWT.NONE);
-		tblclmnAutorestituita.setWidth(100);
-		tblclmnAutorestituita.setText("auto_restituita");
-
-		for (int i = 0; i < con.n.size(); i++) {
-			item = new TableItem(table_1, SWT.NONE);
-			item.setText(0, con.n.get(i).codice + "");
-			item.setText(1, con.n.get(i).auto);
-			item.setText(2, con.n.get(i).socio);
-			item.setText(3, con.n.get(i).inizio + "");
-			item.setText(4, con.n.get(i).fine + "");
-			item.setText(5, con.n.get(i).autoRestituita + "");
-		}
-
-		table_1.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event event) {
-				if (event.detail == SWT.CHECK) {
-					lblSelect.setText("You checked " + event.item);
-				} else {
-					lblSelect.setText("You selected " + event.item);
-				}
+		list.setBounds(10, 44, 212, 182);
+		
+		list_1 = new List(shlCarSharing, SWT.BORDER | SWT.V_SCROLL);
+		list_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				lblSelect.setText(list_1.getItem(list_1.getSelectionIndex()));
 			}
 		});
-
-		table_2 = new Table(shlCarSharing, SWT.BORDER | SWT.FULL_SELECTION);
-		table_2.setBounds(10, 31, 520, 182);
-		table_2.setHeaderVisible(true);
-		table_2.setLinesVisible(true);
-
-		TableColumn tblclmnCf = new TableColumn(table_2, SWT.NONE);
-		tblclmnCf.setWidth(100);
-		tblclmnCf.setText("cf");
-
-		TableColumn tblclmnCognome = new TableColumn(table_2, SWT.NONE);
-		tblclmnCognome.setWidth(100);
-		tblclmnCognome.setText("cognome");
-
-		TableColumn tblclmnNome = new TableColumn(table_2, SWT.NONE);
-		tblclmnNome.setWidth(100);
-		tblclmnNome.setText("nome");
-
-		TableColumn tblclmnIndirizzo = new TableColumn(table_2, SWT.NONE);
-		tblclmnIndirizzo.setWidth(159);
-		tblclmnIndirizzo.setText("indirizzo");
-
-		TableColumn tblclmnTelefono = new TableColumn(table_2, SWT.NONE);
-		tblclmnTelefono.setWidth(100);
-		tblclmnTelefono.setText("telefono");
-
-		Label label = new Label(shlCarSharing, SWT.SEPARATOR | SWT.VERTICAL);
-		label.setBounds(624, 0, -4, 731);
+		list_1.setBounds(10, 264, 212, 182);
+		
+		list_2 = new List(shlCarSharing, SWT.BORDER | SWT.V_SCROLL);
+		list_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				lblSelect.setText(list_2.getItem(list_2.getSelectionIndex()));
+			}
+		});
+		list_2.setBounds(10, 491, 212, 180);
 
 		for (int i = 0; i < con.s.size(); i++) {
-			item = new TableItem(table_2, SWT.NONE);
-			item.setText(0, con.s.get(i).cf);
-			item.setText(1, con.s.get(i).cognome);
-			item.setText(2, con.s.get(i).nome);
-			item.setText(3, con.s.get(i).indirizzo);
-			item.setText(4, con.s.get(i).telefono);
+			list_2.add(con.s.get(i).cognome + " - " + con.s.get(i).nome);
 		}
 
-		table_2.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event event) {
-				if (event.detail == SWT.CHECK) {
-					lblSelect.setText("You checked " + event.item);
-				} else {
-					lblSelect.setText("You selected " + event.item);
-				}
-			}
-		});
+		for (int i = 0; i < con.a.size(); i++) {
+			list.add(con.a.get(i).targa + " - " + con.a.get(i).modello);
+		}
+
+		for (int i = 0; i < con.n.size(); i++) {
+			list_1.add(con.n.get(i).codice + " - " + con.n.get(i).auto);
+		}
 
 		// String changedUserString = userString.replace("'","''");
 
