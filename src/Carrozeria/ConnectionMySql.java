@@ -12,9 +12,13 @@ public class ConnectionMySql {
 	static Statement st;
 	static ResultSet rs;
 	static String sql;
-	int is=0;
-	int ja=0;
-	int kn=0;
+	String auto;
+	String socio;
+	int indexAuto;
+	int indexSocio;
+	int is = 0;
+	int ja = 0;
+	int kn = 0;
 	public ArrayList<Socio> s = new ArrayList<Socio>();
 	public ArrayList<Auto> a = new ArrayList<Auto>();
 	public ArrayList<Noleggio> n = new ArrayList<Noleggio>();
@@ -40,7 +44,7 @@ public class ConnectionMySql {
 			rs = st.executeQuery(sql);
 			while (rs.next() == true) {
 				s.add(new Socio(rs.getString("cf"), rs.getString("cognome"), rs.getString("nome"),
-						rs.getString("indirizzo"), rs.getString("telefono"),is));
+						rs.getString("indirizzo"), rs.getString("telefono"), is));
 				is++;
 			}
 		} catch (SQLException e) {
@@ -55,7 +59,8 @@ public class ConnectionMySql {
 			st = cn.createStatement();
 			rs = st.executeQuery(sql);
 			while (rs.next() == true) {
-				a.add(new Auto(rs.getString("targa"), rs.getString("marca"), rs.getString("modello"),rs.getInt("costo_giornaliero"),ja));
+				a.add(new Auto(rs.getString("targa"), rs.getString("marca"), rs.getString("modello"),
+						rs.getInt("costo_giornaliero"), ja));
 				ja++;
 			}
 		} catch (SQLException e) {
@@ -70,10 +75,26 @@ public class ConnectionMySql {
 			st = cn.createStatement();
 			rs = st.executeQuery(sql);
 			while (rs.next() == true) {
-				n.add(new Noleggio(rs.getInt("codice_noleggio"), rs.getString("auto"), rs.getString("socio"),
-						rs.getDate("inizio"), rs.getDate("fine"), rs.getBoolean("auto_restituita"),kn));
+				auto = rs.getString("auto");
+				for (int i = 0; i < a.size(); i++) {
+					if (a.get(i).getTarga().equals(auto)) {
+						indexAuto = i;
+					}
+				}
+				socio = rs.getString("socio");
+				for (int i = 0; i < s.size(); i++) {
+					if (s.get(i).getCf().equals(socio)) {
+						indexSocio = i;
+					}
+				}
+
+			}
+			while (rs.next() == true) {
+				n.add(new Noleggio(rs.getInt("codice_noleggio"), a.get(indexAuto), s.get(indexSocio),
+						rs.getDate("inizio"), rs.getDate("fine"), rs.getBoolean("auto_restituita"), kn));
 				kn++;
 			}
+
 		} catch (SQLException e) {
 			System.out.println("errore:" + e.getMessage());
 		}
