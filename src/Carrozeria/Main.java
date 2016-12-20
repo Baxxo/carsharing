@@ -61,7 +61,7 @@ public class Main {
 		}
 
 		shlCarSharing = new Shell();
-		shlCarSharing.setSize(750, 750);
+		shlCarSharing.setSize(500, 770);
 		shlCarSharing.setText("Car Sharing");
 
 		Label lblSelect = new Label(shlCarSharing, SWT.BORDER | SWT.WRAP | SWT.SHADOW_IN | SWT.CENTER);
@@ -82,7 +82,7 @@ public class Main {
 		lblElencoNoleggi.setText("Elenco noleggi");
 		lblElencoNoleggi.setAlignment(SWT.CENTER);
 		lblElencoNoleggi.setBounds(10, 452, 212, 26);
-		
+
 		list = new List(shlCarSharing, SWT.BORDER | SWT.V_SCROLL);
 		list.addMouseListener(new MouseAdapter() {
 			@Override
@@ -91,7 +91,7 @@ public class Main {
 			}
 		});
 		list.setBounds(10, 44, 212, 182);
-		
+
 		list_1 = new List(shlCarSharing, SWT.BORDER | SWT.V_SCROLL);
 		list_1.addMouseListener(new MouseAdapter() {
 			@Override
@@ -100,7 +100,7 @@ public class Main {
 			}
 		});
 		list_1.setBounds(10, 264, 212, 182);
-		
+
 		list_2 = new List(shlCarSharing, SWT.BORDER | SWT.V_SCROLL);
 		list_2.addMouseListener(new MouseAdapter() {
 			@Override
@@ -111,15 +111,17 @@ public class Main {
 		list_2.setBounds(10, 491, 212, 180);
 
 		for (int i = 0; i < con.s.size(); i++) {
-			list_2.add(con.s.get(i).cognome + " - " + con.s.get(i).nome);
+			list.add(con.s.get(i).i + " - " + con.s.get(i).cognome + "  " + con.s.get(i).nome);
 		}
 
 		for (int i = 0; i < con.a.size(); i++) {
-			list.add(con.a.get(i).targa + " - " + con.a.get(i).modello);
+			list_1.add(con.a.get(i).i + " - " + con.a.get(i).targa + "  " + con.a.get(i).modello);
 		}
 
+		System.out.println(con.n.size());
+
 		for (int i = 0; i < con.n.size(); i++) {
-			list_1.add(con.n.get(i).codice + " - " + con.n.get(i).auto);
+			list_2.add(con.n.get(i).codice + " - " + con.n.get(i).auto.targa);
 		}
 
 		// String changedUserString = userString.replace("'","''");
