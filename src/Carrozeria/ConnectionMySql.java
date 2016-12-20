@@ -93,7 +93,7 @@ public class ConnectionMySql {
 						js.add(i);
 					}
 				}
-				n.add(new Noleggio(rs.getInt("codice_noleggio"), a.get(jA.get(kn)), s.get(js.get(kn)),
+				n.add(new Noleggio(rs.getInt("cn"), a.get(jA.get(kn)), s.get(js.get(kn)),
 						rs.getDate("inizio"), rs.getDate("fine"), rs.getBoolean("auto_restituita"), kn));
 				kn++;
 
@@ -121,7 +121,7 @@ public class ConnectionMySql {
 
 		try {
 			// Creo la connessione al database
-			cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?user=root&password=");
+			cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?carsharing=root&password=");
 			
 			Calendar datai = Calendar.getInstance();
 			datai.setTime(ini);
@@ -134,7 +134,7 @@ public class ConnectionMySql {
 			String sqlDatafin = dataf.get(Calendar.YEAR) + "-" + dataf.get(Calendar.MONTH) + "-"
 					+ dataf.get(Calendar.DAY_OF_MONTH); 
 			sql = "insert into Noleggi (auto,socio,inizio,fine,auto_restituita) values ('" + a.getTarga() + "','" + s.getCf() + "','" +sqlDataini 
-					+ ",'"+ dataf+"','0')";
+					+ ",'"+ sqlDatafin+"','0')";
 			System.out.println(sql);
 			// ________________________________query
 
