@@ -7,13 +7,15 @@ public class Socio {
 	String nome;
 	String indirizzo;
 	String telefono;
+	int i=0;
 	
-	public Socio (String cf, String cognome, String nome, String indirizzo, String telefono){
+	public Socio (String cf, String cognome, String nome, String indirizzo, String telefono, int i){
 		this.cf=cf;
 		this.cognome = cognome;
 		this.nome=nome;
 		this.indirizzo=indirizzo;
 		this.telefono=telefono;
+		this.i=i;
 	}
 	
 	public String getCf() {

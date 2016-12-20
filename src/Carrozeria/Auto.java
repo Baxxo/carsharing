@@ -6,9 +6,11 @@ public class Auto {
 	String marca;
 	String modello;
 	int costo;
+	int i=0;
 
-	public Auto(String targa, String marca, String modello, int costo) {
+	public Auto(String targa, String marca, String modello, int costo, int i) {
 		this.targa = targa;
+		this.i=i;
 		this.marca = marca;
 		this.modello = modello;
 		this.costo = costo;

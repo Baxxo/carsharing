@@ -61,7 +61,7 @@ public class Main {
 		}
 
 		shlCarSharing = new Shell();
-		shlCarSharing.setSize(1382, 770);
+		shlCarSharing.setSize(750, 750);
 		shlCarSharing.setText("Car Sharing");
 
 		Label lblSelect = new Label(shlCarSharing, SWT.BORDER | SWT.WRAP | SWT.SHADOW_IN | SWT.CENTER);
