@@ -18,6 +18,9 @@ public class Socio {
 		this.i=i;
 	}
 	
+	public Socio() {
+	}
+
 	public int getI() {
 		return i;
 	}
