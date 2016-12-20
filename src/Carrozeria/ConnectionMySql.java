@@ -20,14 +20,14 @@ public class ConnectionMySql {
 	String socio;
 	int indexAuto;
 	int indexSocio;
+	public ArrayList<Integer> jA = new ArrayList<Integer>();
+	public ArrayList<Integer> js = new ArrayList<Integer>();
 	int is = 0;
 	int ja = 0;
 	static int kn = 0;
 	public ArrayList<Socio> s = new ArrayList<Socio>();
 	public ArrayList<Auto> a = new ArrayList<Auto>();
 	public ArrayList<Noleggio> n = new ArrayList<Noleggio>();
-	public ArrayList<Integer> jA = new ArrayList<Integer>();
-	public ArrayList<Integer> js = new ArrayList<Integer>();
 
 	public void Connection() throws SQLException {
 
@@ -93,21 +93,19 @@ public class ConnectionMySql {
 						js.add(i);
 					}
 				}
-				n.add(new Noleggio(rs.getInt("cn"), a.get(jA.get(kn)), s.get(js.get(kn)),
-						rs.getDate("inizio"), rs.getDate("fine"), rs.getBoolean("auto_restituita"), kn));
+				n.add(new Noleggio(rs.getInt("cn"), a.get(jA.get(kn)), s.get(js.get(kn)), rs.getDate("inizio"),
+						rs.getDate("fine"), rs.getBoolean("auto_restituita"), kn));
 				kn++;
 
 			}
-			System.out.println("CIAO");
-			System.out.println(jA.size() + " - " + js.size());
-			
 
 		} catch (SQLException e) {
 			System.out.println("errore:" + e.getMessage());
 		}
 
 	}// fine main
-	public static void nuovoNoleggio(Auto a, Socio s, Date ini, Date fin) throws IOException{
+
+	public static void nuovoNoleggio(Auto a, Socio s, Date ini, Date fin) throws IOException {
 		Connection cn;
 		Statement st;
 		String sql;
@@ -122,19 +120,19 @@ public class ConnectionMySql {
 		try {
 			// Creo la connessione al database
 			cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?carsharing=root&password=");
-			
+
 			Calendar datai = Calendar.getInstance();
 			datai.setTime(ini);
 			Calendar dataf = Calendar.getInstance();
 			dataf.setTime(fin);
-			
+
 			String sqlDataini = datai.get(Calendar.YEAR) + "-" + datai.get(Calendar.MONTH) + "-"
-					+ datai.get(Calendar.DAY_OF_MONTH); //2016-12-20
-			
+					+ datai.get(Calendar.DAY_OF_MONTH); // 2016-12-20
+
 			String sqlDatafin = dataf.get(Calendar.YEAR) + "-" + dataf.get(Calendar.MONTH) + "-"
-					+ dataf.get(Calendar.DAY_OF_MONTH); 
-			sql = "insert into Noleggi (auto,socio,inizio,fine,auto_restituita) values ('" + a.getTarga() + "','" + s.getCf() + "','" +sqlDataini 
-					+ ",'"+ sqlDatafin+"','0')";
+					+ dataf.get(Calendar.DAY_OF_MONTH);
+			sql = "insert into Noleggi (auto,socio,inizio,fine,auto_restituita) values ('" + a.getTarga() + "','"
+					+ s.getCf() + "','" + sqlDataini + ",'" + sqlDatafin + "','0')";
 			System.out.println(sql);
 			// ________________________________query
 
@@ -147,4 +145,28 @@ public class ConnectionMySql {
 		} // fine try-catch
 
 	}
-}// fine classe
+
+	public ArrayList<Socio> getS() {
+		return s;
+	}
+
+	public void setS(ArrayList<Socio> s) {
+		this.s = s;
+	}
+
+	public ArrayList<Auto> getA() {
+		return a;
+	}
+
+	public void setA(ArrayList<Auto> a) {
+		this.a = a;
+	}
+
+	public ArrayList<Noleggio> getN() {
+		return n;
+	}
+
+	public void setN(ArrayList<Noleggio> n) {
+		this.n = n;
+	}
+}
