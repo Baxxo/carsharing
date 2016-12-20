@@ -148,24 +148,25 @@ public class Main {
 
 		Label lblNomeSocio = new Label(shlCarSharing, SWT.NONE);
 		lblNomeSocio.setAlignment(SWT.CENTER);
-		lblNomeSocio.setBounds(236, 10, 238, 15);
+		lblNomeSocio.setBounds(236, 233, 238, 15);
 		lblNomeSocio.setText("Nome Socio");
 
 		DateTime dateTime = new DateTime(shlCarSharing, SWT.BORDER);
-		dateTime.setBounds(276, 78, 165, 24);
+		dateTime.setBounds(276, 285, 165, 24);
 
 		Label lblInizio = new Label(shlCarSharing, SWT.NONE);
 		lblInizio.setAlignment(SWT.CENTER);
-		lblInizio.setBounds(236, 57, 238, 15);
+		lblInizio.setBounds(236, 268, 238, 15);
 		lblInizio.setText("Inizio");
 
 		list_3 = new List(shlCarSharing, SWT.BORDER);
-		list_3.setBounds(276, 143, 165, 138);
-
+		list_3.setBounds(276, 370, 165, 138);
+		
 		Button btnGet = new Button(shlCarSharing, SWT.NONE);
 		btnGet.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				lblNomeSocio.setText(list.getItem(list.getSelectionIndex()));
 				list_3.removeAll();
 				socio.removeAll(socio);
 				sociGiusti = list.getSelectionIndex();
@@ -191,13 +192,10 @@ public class Main {
 				}
 			}
 		});
-		btnGet.setBounds(322, 112, 75, 25);
+		btnGet.setBounds(318, 328, 75, 25);
 		btnGet.setText("Get");
 
-		Label lblNomesocio = new Label(shlCarSharing, SWT.NONE);
-		lblNomesocio.setAlignment(SWT.CENTER);
-		lblNomesocio.setBounds(276, 31, 165, 15);
-
+		
 		// String changedUserString = userString.replace("'","''");
 
 	}
