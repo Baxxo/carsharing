@@ -93,7 +93,7 @@ public class ConnectionMySql {
 						js.add(i);
 					}
 				}
-				n.add(new Noleggio(rs.getInt("cn"), a.get(jA.get(kn)), s.get(js.get(kn)), rs.getDate("inizio"),
+				n.add(new Noleggio(rs.getInt("codice_noleggio"), a.get(jA.get(kn)), s.get(js.get(kn)), rs.getDate("inizio"),
 						rs.getDate("fine"), rs.getBoolean("auto_restituita"), kn));
 				kn++;
 

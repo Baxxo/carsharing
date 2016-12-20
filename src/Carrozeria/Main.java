@@ -33,8 +33,7 @@ public class Main {
 	public ArrayList<Socio> s = new ArrayList<Socio>();
 	public ArrayList<Auto> a = new ArrayList<Auto>();
 	public ArrayList<Noleggio> n = new ArrayList<Noleggio>();
-	
-	
+
 	public ArrayList<Noleggio> socio = new ArrayList<Noleggio>();
 	int sociGiusti;
 
@@ -82,12 +81,12 @@ public class Main {
 		n = con.getN();
 
 		shlCarSharing = new Shell();
-		shlCarSharing.setSize(750, 750);
+		shlCarSharing.setSize(750, 756);
 		shlCarSharing.setText("Car Sharing");
 
 		Label lblSelect = new Label(shlCarSharing, SWT.BORDER | SWT.WRAP | SWT.SHADOW_IN | SWT.CENTER);
 		lblSelect.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.BOLD));
-		lblSelect.setBounds(10, 677, 212, 44);
+		lblSelect.setBounds(10, 677, 212, 31);
 
 		Label lblElencoSoci = new Label(shlCarSharing, SWT.BORDER | SWT.WRAP | SWT.SHADOW_IN | SWT.CENTER);
 		lblElencoSoci.setAlignment(SWT.CENTER);
@@ -130,61 +129,60 @@ public class Main {
 			}
 		});
 		list_2.setBounds(10, 491, 212, 180);
-		
+
 		Label lblSelezionaUn = new Label(shlCarSharing, SWT.CENTER);
 		lblSelezionaUn.setAlignment(SWT.CENTER);
 		lblSelezionaUn.setBounds(352, 66, 139, 28);
 		lblSelezionaUn.setText("1. Seleziona un socio");
-		
+
 		Label lblNoleggiare = new Label(shlCarSharing, SWT.BORDER | SWT.WRAP | SWT.CENTER);
 		lblNoleggiare.setBounds(352, 10, 139, 28);
 		lblNoleggiare.setText("Noleggiare auto");
-		
+
 		Label lblSelezionaUn_1 = new Label(shlCarSharing, SWT.NONE);
 		lblSelezionaUn_1.setAlignment(SWT.CENTER);
 		lblSelezionaUn_1.setBounds(352, 100, 139, 26);
 		lblSelezionaUn_1.setText("2. Seleziona un auto");
-		
+
 		Label lblSelezionaLa = new Label(shlCarSharing, SWT.CENTER);
 		lblSelezionaLa.setBounds(352, 132, 139, 40);
 		lblSelezionaLa.setText("3. Seleziona la data \r\ninizio e fine noleggio\r\n");
-		
-		DateTime dateTime = new DateTime(shlCarSharing, SWT.BORDER);
-		dateTime.setBounds(377, 178, 80, 24);
-		
+
+		DateTime dateTime_2 = new DateTime(shlCarSharing, SWT.BORDER);
+		dateTime_2.setBounds(377, 178, 80, 24);
+
 		Label lblI = new Label(shlCarSharing, SWT.NONE);
 		lblI.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
 		lblI.setAlignment(SWT.CENTER);
 		lblI.setBounds(352, 178, 19, 24);
 		lblI.setText("i:");
-		
+
 		Label lblF = new Label(shlCarSharing, SWT.NONE);
 		lblF.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
 		lblF.setBounds(463, 178, 13, 24);
 		lblF.setText("f:");
-		
+
 		DateTime dateTime_1 = new DateTime(shlCarSharing, SWT.BORDER);
 		dateTime_1.setBounds(482, 178, 80, 24);
-		
+
 		Button btnNuovoNoleggio = new Button(shlCarSharing, SWT.NONE);
 		btnNuovoNoleggio.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				list.addMouseListener(new MouseAdapter() {
-					public void mouseDoubleClick(MouseEvent e) {
-						
+					public void widgetSelected(SelectionEvent e) {
 						Auto auto = new Auto();
 					}
 				});
-				
+
 				list_1.addMouseListener(new MouseAdapter() {
-					public void mouseDoubleClick(MouseEvent e) {
+					public void widgetSelected(SelectionEvent e) {
 						list_1.getSelectionCount();
-						//socio = new Socio();
+						// socio = new Socio();
 					}
 				});
-				
-				//con.nuovoNoleggio(auto, socio, ini,fin);
+
+				// con.nuovoNoleggio(auto, socio, ini,fin);
 			}
 		});
 		btnNuovoNoleggio.setBounds(561, 114, 80, 25);
@@ -206,20 +204,20 @@ public class Main {
 
 		Label lblNomeSocio = new Label(shlCarSharing, SWT.NONE);
 		lblNomeSocio.setAlignment(SWT.CENTER);
-		lblNomeSocio.setBounds(236, 233, 238, 15);
+		lblNomeSocio.setBounds(482, 233, 238, 15);
 		lblNomeSocio.setText("Nome Socio");
 
-		DateTime dateTime1 = new DateTime(shlCarSharing, SWT.BORDER);
+		DateTime dateTime = new DateTime(shlCarSharing, SWT.BORDER);
 		dateTime.setBounds(276, 285, 165, 24);
 
 		Label lblInizio = new Label(shlCarSharing, SWT.NONE);
 		lblInizio.setAlignment(SWT.CENTER);
-		lblInizio.setBounds(236, 268, 238, 15);
+		lblInizio.setBounds(276, 233, 165, 15);
 		lblInizio.setText("Inizio");
 
 		list_3 = new List(shlCarSharing, SWT.BORDER);
-		list_3.setBounds(276, 370, 165, 138);
-		
+		list_3.setBounds(397, 336, 165, 162);
+
 		Button btnGet = new Button(shlCarSharing, SWT.NONE);
 		btnGet.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -244,16 +242,31 @@ public class Main {
 				}
 				for (int i = 0; i < socio.size(); i++) {
 					if (socio.get(i).inizio.after(dataN)) {
-						list_3.add(socio.get(i).auto.targa + " " + socio.get(i).socio.nome );
-						list_3.add(dataN+"");
+						list_3.add(socio.get(i).auto.targa + " " + socio.get(i).socio.nome);
+						list_3.add(dataN + "");
 					}
 				}
 			}
 		});
-		btnGet.setBounds(318, 328, 75, 25);
+		btnGet.setBounds(566, 285, 75, 25);
 		btnGet.setText("Get");
 
+		Label label_1 = new Label(shlCarSharing, SWT.SEPARATOR | SWT.HORIZONTAL);
+		label_1.setBounds(228, 208, 496, 2);
 		
+		Label label_2 = new Label(shlCarSharing, SWT.SEPARATOR | SWT.HORIZONTAL);
+		label_2.setBounds(228, 514, 492, 2);
+		
+		Button btnRestituisci = new Button(shlCarSharing, SWT.NONE);
+		btnRestituisci.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				
+			}
+		});
+		btnRestituisci.setBounds(440, 558, 75, 25);
+		btnRestituisci.setText("Restituisci");
+
 		// String changedUserString = userString.replace("'","''");
 
 	}
