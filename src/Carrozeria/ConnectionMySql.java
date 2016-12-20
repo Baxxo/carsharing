@@ -26,6 +26,8 @@ public class ConnectionMySql {
 	public ArrayList<Socio> s = new ArrayList<Socio>();
 	public ArrayList<Auto> a = new ArrayList<Auto>();
 	public ArrayList<Noleggio> n = new ArrayList<Noleggio>();
+	public ArrayList<Integer> jA = new ArrayList<Integer>();
+	public ArrayList<Integer> js = new ArrayList<Integer>();
 
 	public void Connection() throws SQLException {
 
@@ -79,25 +81,26 @@ public class ConnectionMySql {
 			st = cn.createStatement();
 			rs = st.executeQuery(sql);
 			while (rs.next() == true) {
-				auto = rs.getString("auto");
 				for (int i = 0; i < a.size(); i++) {
+					auto = rs.getString("auto");
 					if (a.get(i).getTarga().equals(auto)) {
-						indexAuto = i;
+						jA.add(i);
 					}
 				}
-				socio = rs.getString("socio");
 				for (int i = 0; i < s.size(); i++) {
+					socio = rs.getString("socio");
 					if (s.get(i).getCf().equals(socio)) {
-						indexSocio = i;
+						js.add(i);
 					}
 				}
-
-			}
-			while (rs.next() == true) {
-				n.add(new Noleggio(rs.getInt("codice_noleggio"), a.get(indexAuto), s.get(indexSocio),
+				n.add(new Noleggio(rs.getInt("codice_noleggio"), a.get(jA.get(kn)), s.get(js.get(kn)),
 						rs.getDate("inizio"), rs.getDate("fine"), rs.getBoolean("auto_restituita"), kn));
 				kn++;
+
 			}
+			System.out.println("CIAO");
+			System.out.println(jA.size() + " - " + js.size());
+			
 
 		} catch (SQLException e) {
 			System.out.println("errore:" + e.getMessage());

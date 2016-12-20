@@ -18,6 +18,18 @@ public class Socio {
 		this.i=i;
 	}
 	
+	public int getI() {
+		return i;
+	}
+
+	public void setI(int i) {
+		this.i = i;
+	}
+
+	public void setCognome(String cognome) {
+		this.cognome = cognome;
+	}
+
 	public String getCf() {
 		return cf;
 	}
