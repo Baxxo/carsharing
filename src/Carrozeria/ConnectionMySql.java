@@ -15,6 +15,7 @@ public class ConnectionMySql {
 	static Connection cn;
 	static Statement st;
 	static ResultSet rs;
+	static int ru;
 	static String sql;
 	String auto;
 	String socio;
@@ -145,6 +146,32 @@ public class ConnectionMySql {
 		} catch (SQLException e) {
 			System.out.println("errore:" + e.getMessage());
 		} // fine try-catch
+
+	}
+
+	public void restituisciAuto(int index) {
+		Connection cn;
+		Statement st;
+		String sql;
+		// ________________________________connessione
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			System.out.println("ClassNotFoundException: ");
+			System.err.println(e.getMessage());
+		} // fine try-catch
+
+
+		try {
+			cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/carsharing?user=root&password=");
+			
+			sql = "UPDATE `noleggi` SET `auto_restituita` = '1' WHERE `noleggi`.`codice_noleggio` = " + index+1 + "; ";			
+			st = cn.createStatement();
+			ru = st.executeUpdate(sql);
+
+		} catch (SQLException e) {
+			System.out.println("errore:" + e.getMessage());
+		}
 
 	}
 
