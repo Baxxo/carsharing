@@ -3,6 +3,7 @@ package Carrozeria;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,6 +31,7 @@ public class Main {
 	List list_1;
 	List list_2;
 	List list_3;
+	int posS,posA;
 	public ArrayList<Socio> s = new ArrayList<Socio>();
 	public ArrayList<Auto> a = new ArrayList<Auto>();
 	public ArrayList<Noleggio> n = new ArrayList<Noleggio>();
@@ -108,6 +110,8 @@ public class Main {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 				lblSelect.setText(list.getItem(list.getSelectionIndex()));
+				posS = list.getSelectionIndex();
+				System.out.println(posS);
 			}
 		});
 		list.setBounds(10, 44, 212, 182);
@@ -117,6 +121,8 @@ public class Main {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 				lblSelect.setText(list_1.getItem(list_1.getSelectionIndex()));
+				posA = list_1.getSelectionIndex();
+				
 			}
 		});
 		list_1.setBounds(10, 264, 212, 182);
@@ -164,29 +170,59 @@ public class Main {
 
 		DateTime dateTime_1 = new DateTime(shlCarSharing, SWT.BORDER);
 		dateTime_1.setBounds(482, 178, 80, 24);
-
+		
+		
 		Button btnNuovoNoleggio = new Button(shlCarSharing, SWT.NONE);
 		btnNuovoNoleggio.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				list.addMouseListener(new MouseAdapter() {
-					public void widgetSelected(SelectionEvent e) {
-						Auto auto = new Auto();
+				//conversione da dateTime a date
+				java.text.DateFormat dini = new SimpleDateFormat("yyyy-MM-dd");
+				Date dataN = null;
+				try {
+					dataN = dini.parse(dateTime_2.getYear() + "-" + dateTime_2.getMonth() + "-" + dateTime_2.getDay());
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				java.text.DateFormat dfin = new SimpleDateFormat("yyyy-MM-dd");
+				Date dataM = null;
+				try {
+					dataM = dfin.parse(dateTime_1.getYear() + "-" + dateTime_1.getMonth() + "-" + dateTime_1.getDay());
+				} catch (ParseException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				if(dataN.before(dataM)){
+					System.out.println("corretto");
+					boolean rest = false;
+					Noleggio noleg = new Noleggio(posS,a.get(posA),s.get(posS),dataN,dataM,rest,posA);
+					n.add(noleg);
+					list_2.removeAll();
+					for (int i = 0; i < con.n.size(); i++) {
+						list_2.add(con.n.get(i).codice + " - " + con.n.get(i).auto.targa + " - " + con.n.get(i).socio.nome);
 					}
-				});
-
-				list_1.addMouseListener(new MouseAdapter() {
-					public void widgetSelected(SelectionEvent e) {
-						list_1.getSelectionCount();
-						// socio = new Socio();
+					try {
+						con.nuovoNoleggio(a.get(posA),s.get(posS), dataN ,dataM);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
-				});
-
-				// con.nuovoNoleggio(auto, socio, ini,fin);
+				}else{
+					System.out.println("data finale incorretta");
+				}
 			}
 		});
-		btnNuovoNoleggio.setBounds(561, 114, 80, 25);
+		btnNuovoNoleggio.setBounds(617, 177, 80, 25);
 		btnNuovoNoleggio.setText("Noleggia!");
+		int t=0;
+		do{
+			for(int i=0;i<n.size();i++){
+				
+			}
+			t++;
+		}while(t<con.a.size());
+		
 		for (int i = 0; i < con.s.size(); i++) {
 			list.add(con.s.get(i).cognome + "  " + con.s.get(i).nome);
 		}
@@ -266,6 +302,13 @@ public class Main {
 		});
 		btnRestituisci.setBounds(440, 558, 75, 25);
 		btnRestituisci.setText("Restituisci");
+		
+		List list_autolibere = new List(shlCarSharing, SWT.BORDER);
+		list_autolibere.setBounds(581, 62, 139, 94);
+		
+		Label lblAutoDisponibili = new Label(shlCarSharing, SWT.BORDER | SWT.WRAP | SWT.CENTER);
+		lblAutoDisponibili.setText("Auto disponibili");
+		lblAutoDisponibili.setBounds(581, 10, 139, 28);
 
 		// String changedUserString = userString.replace("'","''");
 

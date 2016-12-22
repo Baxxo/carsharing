@@ -8,11 +8,11 @@ public class Noleggio {
 	int i=0;
 	Auto auto;
 	Socio socio;
-	Date inizio;
-	Date fine;
+	java.util.Date inizio;
+	java.util.Date fine;
 	boolean autoRestituita;
 
-	public Noleggio(int codice, Auto auto, Socio socio, Date inizio, Date fine, boolean autoRestituita, int i) {
+	public Noleggio(int codice, Auto auto, Socio socio, java.util.Date inizio, java.util.Date fine, boolean autoRestituita, int i) {
 		this.codice = codice;
 		this.i=i;
 		this.auto = auto;
@@ -20,10 +20,6 @@ public class Noleggio {
 		this.inizio = inizio;
 		this.fine = fine;
 		this.autoRestituita = autoRestituita;
-	}
-
-	public Noleggio() {
-		
 	}
 
 	public int getCodice() {
@@ -59,7 +55,7 @@ public class Noleggio {
 	}
 
 	public Date getInizio() {
-		return inizio;
+		return (Date) inizio;
 	}
 
 	public void setInizio(Date inizio) {
@@ -67,7 +63,7 @@ public class Noleggio {
 	}
 
 	public Date getFine() {
-		return fine;
+		return (Date) fine;
 	}
 
 	public void setFine(Date fine) {

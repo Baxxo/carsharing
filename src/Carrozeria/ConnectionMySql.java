@@ -93,8 +93,8 @@ public class ConnectionMySql {
 						js.add(i);
 					}
 				}
-				n.add(new Noleggio(rs.getInt("codice_noleggio"), a.get(jA.get(kn)), s.get(js.get(kn)), rs.getDate("inizio"),
-						rs.getDate("fine"), rs.getBoolean("auto_restituita"), kn));
+				n.add(new Noleggio(rs.getInt("codice_noleggio"), a.get(jA.get(kn)), s.get(js.get(kn)),
+						rs.getDate("inizio"), rs.getDate("fine"), rs.getBoolean("auto_restituita"), kn));
 				kn++;
 
 			}
@@ -105,7 +105,7 @@ public class ConnectionMySql {
 
 	}// fine main
 
-	public static void nuovoNoleggio(Auto a, Socio s, Date ini, Date fin) throws IOException {
+	public void nuovoNoleggio(Auto a, Socio s, java.util.Date dataN, java.util.Date dataM) throws IOException {
 		Connection cn;
 		Statement st;
 		String sql;
@@ -119,20 +119,22 @@ public class ConnectionMySql {
 
 		try {
 			// Creo la connessione al database
-			cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?carsharing=root&password=");
+			cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/carsharing?user=root&password=");
 
 			Calendar datai = Calendar.getInstance();
-			datai.setTime(ini);
+			datai.setTime(dataN);
+
 			Calendar dataf = Calendar.getInstance();
-			dataf.setTime(fin);
+			dataf.setTime(dataM);
 
 			String sqlDataini = datai.get(Calendar.YEAR) + "-" + datai.get(Calendar.MONTH) + "-"
 					+ datai.get(Calendar.DAY_OF_MONTH); // 2016-12-20
 
 			String sqlDatafin = dataf.get(Calendar.YEAR) + "-" + dataf.get(Calendar.MONTH) + "-"
 					+ dataf.get(Calendar.DAY_OF_MONTH);
-			sql = "insert into Noleggi (auto,socio,inizio,fine,auto_restituita) values ('" + a.getTarga() + "','"
-					+ s.getCf() + "','" + sqlDataini + ",'" + sqlDatafin + "','0')";
+
+			sql = "INSERT INTO noleggi (auto,socio,inizio,fine,auto_restituita) VALUES ('" + a.getTarga() + "','"
+					+ s.getCf() + "','" + sqlDataini + "','" + sqlDatafin + "','0')";
 			System.out.println(sql);
 			// ________________________________query
 
