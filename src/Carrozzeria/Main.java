@@ -1,4 +1,4 @@
-package Carrozeria;
+package Carrozzeria;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -45,6 +45,12 @@ public class Main {
 
 	public ArrayList<Noleggio> socio = new ArrayList<Noleggio>();
 	int sociGiusti;
+
+	Button btnGet;
+	Button btnRestituisci;
+	Button btnNuovoNoleggio;
+
+	Boolean[] t = { false, false };
 
 	/**
 	 * Launch the application.
@@ -119,6 +125,15 @@ public class Main {
 				posS = list.getSelectionIndex();
 				System.out.println(posS);
 			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				btnGet.setVisible(true);
+				t[0] = true;
+				if (t[0] == true && t[1] == true) {
+					btnNuovoNoleggio.setVisible(true);
+				}
+			}
 		});
 		list.setBounds(10, 44, 212, 182);
 
@@ -138,6 +153,11 @@ public class Main {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 				lblSelect.setText(list_2.getItem(list_2.getSelectionIndex()));
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				btnRestituisci.setVisible(true);
 			}
 		});
 		list_2.setBounds(10, 491, 212, 180);
@@ -159,6 +179,15 @@ public class Main {
 		lblSelezionaUn_1.setText("2. Seleziona un auto\r\ndisponibile");
 
 		List list_autolibere = new List(shlCarSharing, SWT.BORDER);
+		list_autolibere.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDown(MouseEvent e) {
+				t[1] = true;
+				if (t[0] == true && t[1] == true) {
+					btnNuovoNoleggio.setVisible(true);
+				}
+			}
+		});
 		list_autolibere.setBounds(581, 62, 139, 94);
 
 		Label lblSelezionaLa = new Label(shlCarSharing, SWT.CENTER);
@@ -180,6 +209,7 @@ public class Main {
 		lblF.setText("f:");
 
 		DateTime dateTime_1 = new DateTime(shlCarSharing, SWT.BORDER);
+
 		dateTime_1.setBounds(482, 178, 80, 24);
 
 		for (int i = 0; i < con.n.size(); i++) {
@@ -189,7 +219,8 @@ public class Main {
 			}
 		}
 
-		Button btnNuovoNoleggio = new Button(shlCarSharing, SWT.NONE);
+		btnNuovoNoleggio = new Button(shlCarSharing, SWT.NONE);
+		btnNuovoNoleggio.setVisible(false);
 		btnNuovoNoleggio.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -199,7 +230,7 @@ public class Main {
 				try {
 					dataN = dini.parse(dateTime_2.getYear() + "-" + dateTime_2.getMonth() + "-" + dateTime_2.getDay());
 				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
+
 					e1.printStackTrace();
 				}
 				java.text.DateFormat dfin = new SimpleDateFormat("yyyy-MM-dd");
@@ -207,7 +238,7 @@ public class Main {
 				try {
 					dataM = dfin.parse(dateTime_1.getYear() + "-" + dateTime_1.getMonth() + "-" + dateTime_1.getDay());
 				} catch (ParseException e2) {
-					// TODO Auto-generated catch block
+
 					e2.printStackTrace();
 				}
 				if (dataN.before(dataM)) {
@@ -223,12 +254,15 @@ public class Main {
 					try {
 						con.nuovoNoleggio(a.get(posA), s.get(posS), dataN, dataM);
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
+
 						e1.printStackTrace();
 					}
 				} else {
 					System.out.println("data finale incorretta");
 				}
+				t[0] = false;
+				t[1] = false;
+				btnNuovoNoleggio.setVisible(false);
 			}
 		});
 		btnNuovoNoleggio.setBounds(617, 177, 80, 25);
@@ -239,7 +273,7 @@ public class Main {
 
 		Label lblNomeSocio = new Label(shlCarSharing, SWT.NONE);
 		lblNomeSocio.setAlignment(SWT.CENTER);
-		lblNomeSocio.setBounds(482, 233, 238, 15);
+		lblNomeSocio.setBounds(463, 233, 257, 15);
 		lblNomeSocio.setText("Nome Socio");
 
 		DateTime dateTime = new DateTime(shlCarSharing, SWT.BORDER);
@@ -247,14 +281,15 @@ public class Main {
 
 		Label lblInizio = new Label(shlCarSharing, SWT.NONE);
 		lblInizio.setAlignment(SWT.CENTER);
-		lblInizio.setBounds(276, 233, 165, 15);
+		lblInizio.setBounds(276, 268, 165, 15);
 		lblInizio.setText("Inizio");
 
-		Button btnGet = new Button(shlCarSharing, SWT.NONE);
+		btnGet = new Button(shlCarSharing, SWT.NONE);
+		btnGet.setVisible(false);
 		btnGet.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				lblNomeSocio.setText(list.getItem(list.getSelectionIndex()));
+				lblNomeSocio.setText("Nome Socio: " + list.getItem(list.getSelectionIndex()));
 				list_3.removeAll();
 				socio.removeAll(socio);
 				sociGiusti = list.getSelectionIndex();
@@ -271,12 +306,17 @@ public class Main {
 				} catch (ParseException e1) {
 					e1.printStackTrace();
 				}
+				if (socio.size() == 0) {
+					list_3.add("Nessun noleggio!");
+				}
 				for (int i = 0; i < socio.size(); i++) {
 					if (socio.get(i).inizio.after(dataInizio)) {
 						list_3.add(socio.get(i).auto.targa + " " + socio.get(i).socio.nome);
 						list_3.add(dataInizio + "");
 					}
+
 				}
+				btnGet.setVisible(false);
 			}
 		});
 		btnGet.setBounds(566, 285, 75, 25);
@@ -301,7 +341,8 @@ public class Main {
 		lblData.setBounds(397, 549, 60, 20);
 		lblData.setText("Data");
 
-		Button btnRestituisci = new Button(shlCarSharing, SWT.NONE);
+		btnRestituisci = new Button(shlCarSharing, SWT.NONE);
+		btnRestituisci.setVisible(false);
 		btnRestituisci.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -347,6 +388,7 @@ public class Main {
 				n.get(index).setAutoRestituita(true);
 				con.restituisciAuto(index);
 				refresh();
+				btnRestituisci.setVisible(false);
 			}
 		});
 		btnRestituisci.setBounds(431, 598, 75, 25);
@@ -366,14 +408,21 @@ public class Main {
 		btnRefresh.setBounds(649, 683, 75, 25);
 		btnRefresh.setText("Refresh");
 
+		Label lblElencoNoleggi_1 = new Label(shlCarSharing, SWT.BORDER | SWT.WRAP | SWT.SHADOW_IN | SWT.CENTER);
+		lblElencoNoleggi_1.setAlignment(SWT.CENTER);
+		lblElencoNoleggi_1.setBounds(280, 216, 161, 32);
+		lblElencoNoleggi_1.setText("ELENCO NOLEGGI");
+
 		// String changedUserString = userString.replace("'","''");
 
 	}
 
 	private void refresh() {
-		a = con.getA();
-		s = con.getS();
-		n = con.getN();
+		try {
+			con.Connection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 		list.removeAll();
 		list_1.removeAll();

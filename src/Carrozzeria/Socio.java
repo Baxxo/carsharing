@@ -1,4 +1,4 @@
-package Carrozeria;
+package Carrozzeria;
 
 public class Socio {
 

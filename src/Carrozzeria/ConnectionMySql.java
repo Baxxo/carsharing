@@ -1,4 +1,4 @@
-package Carrozeria;
+package Carrozzeria;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -22,8 +22,8 @@ public class ConnectionMySql {
 	int indexSocio;
 	public ArrayList<Integer> jA = new ArrayList<Integer>();
 	public ArrayList<Integer> js = new ArrayList<Integer>();
-	int is = 0;
 	int ja = 0;
+	int is = 0;
 	static int kn = 0;
 	public ArrayList<Socio> s = new ArrayList<Socio>();
 	public ArrayList<Auto> a = new ArrayList<Auto>();
@@ -75,7 +75,7 @@ public class ConnectionMySql {
 
 		// SELECT Noleggi
 
-		sql = "SELECT * FROM `noleggi`";
+		sql = "SELECT * FROM `noleggi";
 
 		try {
 			st = cn.createStatement();
@@ -164,8 +164,9 @@ public class ConnectionMySql {
 		try {
 			cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/carsharing?user=root&password=");
 			
-			sql = "UPDATE `noleggi` SET `auto_restituita` = '1' WHERE `noleggi`.`codice_noleggio` = " + index+1 + "; ";			
+			sql = "UPDATE `noleggi` SET `auto_restituita` = 1 WHERE `codice_noleggio`= " + index+1 + ";";			
 			st = cn.createStatement();
+			System.out.println(sql + " fatto!");
 			ru = st.executeUpdate(sql);
 
 		} catch (SQLException e) {
