@@ -41,6 +41,7 @@ public class Main {
 	long soldi;
 	public ArrayList<Socio> s = new ArrayList<Socio>();
 	public ArrayList<Auto> a = new ArrayList<Auto>();
+	public ArrayList<Auto> autoDisponibili = new ArrayList<Auto>();
 	public ArrayList<Noleggio> n = new ArrayList<Noleggio>();
 
 	public ArrayList<Noleggio> socio = new ArrayList<Noleggio>();
@@ -127,8 +128,6 @@ public class Main {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 				lblSelect.setText(list_1.getItem(list_1.getSelectionIndex()));
-				posA = list_1.getSelectionIndex();
-
 			}
 		});
 		list_1.setBounds(10, 264, 212, 182);
@@ -182,18 +181,21 @@ public class Main {
 		DateTime dateTime_1 = new DateTime(shlCarSharing, SWT.BORDER);
 		dateTime_1.setBounds(482, 178, 80, 24);
 
+		autoDisponibili.clear();
 		for (int i = 0; i < con.n.size(); i++) {
-			if (n.get(i).autoRestituita == false) {
-				list_autolibere
-						.add(con.n.get(i).codice + " - " + con.n.get(i).auto.targa + " - " + con.n.get(i).socio.nome);
+			if (con.n.get(i).autoRestituita == false) {
+				Auto a = new Auto(con.n.get(i).auto.targa,con.n.get(i).auto.marca,con.n.get(i).auto.modello,0,0);
+				list_autolibere.add(con.n.get(i).auto.modello + " - " + con.n.get(i).auto.targa);
+				autoDisponibili.add(a);
+				//posA = list_autolibere.getSelectionIndex();
 			}
 		}
-
 		Button btnNuovoNoleggio = new Button(shlCarSharing, SWT.NONE);
 		btnNuovoNoleggio.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// conversione da dateTime a date
+				
 				java.text.DateFormat dini = new SimpleDateFormat("yyyy-MM-dd");
 				Date dataN = null;
 				try {
@@ -213,14 +215,17 @@ public class Main {
 				if (dataN.before(dataM)) {
 					System.out.println("corretto");
 					boolean rest = false;
-					Noleggio noleg = new Noleggio(posS, a.get(posA), s.get(posS), dataN, dataM, rest, posA);
+					posA = list_autolibere.getSelectionIndex();
+					System.out.println(posA + " " + posS);
+					//Noleggio noleg = new Noleggio(posS, a.get(posA), s.get(posS), dataN, dataM, rest, posA);
+					Noleggio noleg = new Noleggio(posS, autoDisponibili.get(posA), s.get(posS), dataN, dataM, rest, posA);
 					n.add(noleg);
 					list_2.removeAll();
 					for (int i = 0; i < con.n.size(); i++) {
-						list_2.add(con.n.get(i).codice + " - " + con.n.get(i).auto.targa + " - "
-								+ con.n.get(i).socio.nome);
+						list_2.add(con.n.get(i).codice + " - " + con.n.get(i).auto.targa + " - " + con.n.get(i).socio.nome);
 					}
 					try {
+						
 						con.nuovoNoleggio(a.get(posA), s.get(posS), dataN, dataM);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
