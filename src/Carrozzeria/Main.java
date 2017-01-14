@@ -286,11 +286,15 @@ public class Main {
 				} catch (ParseException e1) {
 					System.out.print("Reinserisci data");
 				}
-				for (int i = 0; i < socio.size(); i++) {
-					if (socio.get(i).inizio.after(dataInizio)) {
-						list_3.add(socio.get(i).auto.targa + " " + socio.get(i).socio.nome);
-						list_3.add(dataInizio + "");
-					}
+				if(socio.size()==0){
+					list_3.add("Nessun noleggio");
+				}else{
+					for (int i = 0; i < socio.size(); i++) {
+						if (socio.get(i).inizio.after(dataInizio)) {
+							list_3.add(socio.get(i).auto.targa + " " + socio.get(i).socio.nome);
+							list_3.add(dataInizio + "");
+						}
+					}					
 				}
 				btnGet.setVisible(false);
 			}
