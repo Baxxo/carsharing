@@ -305,13 +305,13 @@ public class Main {
 				}
 				if (socio.size() == 0) {
 					list_3.add("Nessun noleggio!");
-				}
-				for (int i = 0; i < socio.size(); i++) {
-					if (socio.get(i).inizio.after(dataInizio)) {
-						list_3.add(socio.get(i).auto.targa + " " + socio.get(i).socio.nome);
-						list_3.add(dataInizio + "");
+				}else{
+					for (int i = 0; i < socio.size(); i++) {
+						if (socio.get(i).inizio.after(dataInizio)) {
+							list_3.add(socio.get(i).auto.targa + " " + socio.get(i).socio.nome);
+							list_3.add(dataInizio + "");
+						}
 					}
-
 				}
 				btnGet.setVisible(false);
 			}
