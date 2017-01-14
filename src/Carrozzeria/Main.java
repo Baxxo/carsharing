@@ -281,15 +281,14 @@ public class Main {
 			public void widgetSelected(SelectionEvent e) {
 				lblNomeSocio.setText("Nome Socio: " + list.getItem(list.getSelectionIndex()));
 				list_3.removeAll();
-				//array fatto a posta
+				// array fatto a posta
 				socio.clear();
-				//vaiabile fatta a posta
+				// vaiabile fatta a posta
 				sociGiusti = list.getSelectionIndex();
-				//System.out.println(s.get(sociGiusti).getCf());
 				for (int i = 0; i < n.size(); i++) {
 					if (s.get(sociGiusti).getCf().equals(n.get(i).socio.getCf())) {
-						list_3.add(s.get(sociGiusti).nome);
-						socio.add(n.get(sociGiusti));
+						System.out.println("Ciao");
+						socio.add(n.get(i));
 					}
 				}
 				java.text.DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -416,6 +415,10 @@ public class Main {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
+		s = con.getS();
+		a = con.getA();
+		n = con.getN();
 
 		list.removeAll();
 		list_1.removeAll();
