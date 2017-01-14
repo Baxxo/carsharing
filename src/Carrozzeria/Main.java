@@ -32,6 +32,7 @@ public class Main {
 	List list_1;
 	List list_2;
 	List list_3;
+	List list_autolibere;
 
 	int posS, posA;
 
@@ -157,7 +158,7 @@ public class Main {
 		lblSelezionaUn_1.setBounds(352, 95, 139, 31);
 		lblSelezionaUn_1.setText("2. Seleziona un auto\r\ndisponibile");
 
-		List list_autolibere = new List(shlCarSharing, SWT.BORDER);
+		list_autolibere = new List(shlCarSharing, SWT.BORDER);
 		list_autolibere.setBounds(581, 62, 139, 94);
 
 		Label lblSelezionaLa = new Label(shlCarSharing, SWT.CENTER);
@@ -395,6 +396,14 @@ public class Main {
 		for (int i = 0; i < con.n.size(); i++) {
 			list_2.add(con.n.get(i).codice + " - " + con.n.get(i).auto.targa + " - " + con.n.get(i).socio.nome);
 
+		}
+		for (int i = 0; i < con.n.size(); i++) {
+			if (con.n.get(i).autoRestituita == false) {
+				Auto a = new Auto(con.n.get(i).auto.targa,con.n.get(i).auto.marca,con.n.get(i).auto.modello,0,0);
+				//list_autolibere.add(con.n.get(i).auto.modello + " - " + con.n.get(i).auto.targa);
+				autoDisponibili.add(a);
+				//posA = list_autolibere.getSelectionIndex();
+			}
 		}
 	}
 }
