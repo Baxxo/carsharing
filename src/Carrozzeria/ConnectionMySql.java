@@ -30,6 +30,9 @@ public class ConnectionMySql {
 	public ArrayList<Noleggio> n = new ArrayList<Noleggio>();
 
 	public void Connection() throws SQLException {
+		s.clear();
+		a.clear();
+		n.clear();
 
 		// ________________________________connessione
 		try {

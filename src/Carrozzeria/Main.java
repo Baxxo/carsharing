@@ -32,10 +32,9 @@ public class Main {
 	List list_1;
 	List list_2;
 	List list_3;
+	List list_autolibere;
 
 	int posS, posA;
-	Button btnGet;
-	Button btnRestituisci;
 
 	String l;
 	long diff;
@@ -43,11 +42,16 @@ public class Main {
 	long soldi;
 	public ArrayList<Socio> s = new ArrayList<Socio>();
 	public ArrayList<Auto> a = new ArrayList<Auto>();
-	public ArrayList<Auto> autoDisponibili = new ArrayList<Auto>();
 	public ArrayList<Noleggio> n = new ArrayList<Noleggio>();
 
 	public ArrayList<Noleggio> socio = new ArrayList<Noleggio>();
 	int sociGiusti;
+
+	Button btnGet;
+	Button btnRestituisci;
+	Button btnNuovoNoleggio;
+
+	Boolean[] t = { false, false };
 
 	/**
 	 * Launch the application.
@@ -122,9 +126,14 @@ public class Main {
 				posS = list.getSelectionIndex();
 				System.out.println(posS);
 			}
+
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void mouseDown(MouseEvent e) {
 				btnGet.setVisible(true);
+				t[0] = true;
+				if (t[0] == true && t[1] == true) {
+					btnNuovoNoleggio.setVisible(true);
+				}
 			}
 		});
 		list.setBounds(10, 44, 212, 182);
@@ -134,6 +143,8 @@ public class Main {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 				lblSelect.setText(list_1.getItem(list_1.getSelectionIndex()));
+				posA = list_1.getSelectionIndex();
+
 			}
 		});
 		list_1.setBounds(10, 264, 212, 182);
@@ -144,12 +155,25 @@ public class Main {
 			public void mouseDoubleClick(MouseEvent e) {
 				lblSelect.setText(list_2.getItem(list_2.getSelectionIndex()));
 			}
+
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void mouseDown(MouseEvent e) {
 				btnRestituisci.setVisible(true);
 			}
 		});
 		list_2.setBounds(10, 491, 212, 180);
+		
+		list_autolibere = new List(shlCarSharing, SWT.BORDER);
+		list_autolibere.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDown(MouseEvent e) {
+				t[1] = true;
+				if (t[0] == true && t[1] == true) {
+					btnNuovoNoleggio.setVisible(true);
+				}
+			}
+		});
+		list_autolibere.setBounds(581, 62, 139, 94);
 
 		refresh();
 
@@ -167,8 +191,7 @@ public class Main {
 		lblSelezionaUn_1.setBounds(352, 95, 139, 31);
 		lblSelezionaUn_1.setText("2. Seleziona un auto\r\ndisponibile");
 
-		List list_autolibere = new List(shlCarSharing, SWT.BORDER);
-		list_autolibere.setBounds(581, 62, 139, 94);
+		
 
 		Label lblSelezionaLa = new Label(shlCarSharing, SWT.CENTER);
 		lblSelezionaLa.setBounds(352, 132, 139, 40);
@@ -189,29 +212,22 @@ public class Main {
 		lblF.setText("f:");
 
 		DateTime dateTime_1 = new DateTime(shlCarSharing, SWT.BORDER);
+
 		dateTime_1.setBounds(482, 178, 80, 24);
 
-		autoDisponibili.clear();
-		for (int i = 0; i < con.n.size(); i++) {
-			if (con.n.get(i).autoRestituita == false) {
-				Auto a = new Auto(con.n.get(i).auto.targa,con.n.get(i).auto.marca,con.n.get(i).auto.modello,0,0);
-				list_autolibere.add(con.n.get(i).auto.modello + " - " + con.n.get(i).auto.targa);
-				autoDisponibili.add(a);
-				//posA = list_autolibere.getSelectionIndex();
-			}
-		}
-		Button btnNuovoNoleggio = new Button(shlCarSharing, SWT.NONE);
+
+		btnNuovoNoleggio = new Button(shlCarSharing, SWT.NONE);
+		btnNuovoNoleggio.setVisible(false);
 		btnNuovoNoleggio.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// conversione da dateTime a date
-				
 				java.text.DateFormat dini = new SimpleDateFormat("yyyy-MM-dd");
 				Date dataN = null;
 				try {
 					dataN = dini.parse(dateTime_2.getYear() + "-" + dateTime_2.getMonth() + "-" + dateTime_2.getDay());
 				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
+
 					e1.printStackTrace();
 				}
 				java.text.DateFormat dfin = new SimpleDateFormat("yyyy-MM-dd");
@@ -219,31 +235,31 @@ public class Main {
 				try {
 					dataM = dfin.parse(dateTime_1.getYear() + "-" + dateTime_1.getMonth() + "-" + dateTime_1.getDay());
 				} catch (ParseException e2) {
-					// TODO Auto-generated catch block
+
 					e2.printStackTrace();
 				}
 				if (dataN.before(dataM)) {
 					System.out.println("corretto");
 					boolean rest = false;
-					posA = list_autolibere.getSelectionIndex();
-					System.out.println(posA + " " + posS);
-					//Noleggio noleg = new Noleggio(posS, a.get(posA), s.get(posS), dataN, dataM, rest, posA);
-					Noleggio noleg = new Noleggio(posS, autoDisponibili.get(posA), s.get(posS), dataN, dataM, rest, posA);
+					Noleggio noleg = new Noleggio(posS, a.get(posA), s.get(posS), dataN, dataM, rest, posA);
 					n.add(noleg);
 					list_2.removeAll();
 					for (int i = 0; i < con.n.size(); i++) {
-						list_2.add(con.n.get(i).codice + " - " + con.n.get(i).auto.targa + " - " + con.n.get(i).socio.nome);
+						list_2.add(con.n.get(i).codice + " - " + con.n.get(i).auto.targa + " - "
+								+ con.n.get(i).socio.nome);
 					}
 					try {
-						
 						con.nuovoNoleggio(a.get(posA), s.get(posS), dataN, dataM);
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
+
 						e1.printStackTrace();
 					}
 				} else {
 					System.out.println("data finale incorretta");
 				}
+				t[0] = false;
+				t[1] = false;
+				btnNuovoNoleggio.setVisible(false);
 			}
 		});
 		btnNuovoNoleggio.setBounds(617, 177, 80, 25);
@@ -254,7 +270,7 @@ public class Main {
 
 		Label lblNomeSocio = new Label(shlCarSharing, SWT.NONE);
 		lblNomeSocio.setAlignment(SWT.CENTER);
-		lblNomeSocio.setBounds(482, 233, 238, 15);
+		lblNomeSocio.setBounds(463, 233, 257, 15);
 		lblNomeSocio.setText("Nome Socio");
 
 		DateTime dateTime = new DateTime(shlCarSharing, SWT.BORDER);
@@ -262,14 +278,15 @@ public class Main {
 
 		Label lblInizio = new Label(shlCarSharing, SWT.NONE);
 		lblInizio.setAlignment(SWT.CENTER);
-		lblInizio.setBounds(276, 233, 165, 15);
+		lblInizio.setBounds(276, 268, 165, 15);
 		lblInizio.setText("Inizio");
 
 		btnGet = new Button(shlCarSharing, SWT.NONE);
+		btnGet.setVisible(false);
 		btnGet.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				lblNomeSocio.setText(list.getItem(list.getSelectionIndex()));
+				lblNomeSocio.setText("Nome Socio: " + list.getItem(list.getSelectionIndex()));
 				list_3.removeAll();
 				socio.removeAll(socio);
 				sociGiusti = list.getSelectionIndex();
@@ -284,24 +301,23 @@ public class Main {
 				try {
 					dataInizio = df.parse(dateTime.getYear() + "-" + dateTime.getMonth() + 1 + "-" + dateTime.getDay());
 				} catch (ParseException e1) {
-					System.out.print("Reinserisci data");
+					e1.printStackTrace();
 				}
-				if(socio.size()==0){
-					list_3.add("Nessun noleggio");
+				if (socio.size() == 0) {
+					list_3.add("Nessun noleggio!");
 				}else{
 					for (int i = 0; i < socio.size(); i++) {
 						if (socio.get(i).inizio.after(dataInizio)) {
 							list_3.add(socio.get(i).auto.targa + " " + socio.get(i).socio.nome);
 							list_3.add(dataInizio + "");
 						}
-					}					
+					}
 				}
 				btnGet.setVisible(false);
 			}
 		});
 		btnGet.setBounds(566, 285, 75, 25);
 		btnGet.setText("Get");
-		btnGet.setVisible(false);
 
 		Label label_1 = new Label(shlCarSharing, SWT.SEPARATOR | SWT.HORIZONTAL);
 		label_1.setBounds(228, 208, 496, 2);
@@ -323,6 +339,7 @@ public class Main {
 		lblData.setText("Data");
 
 		btnRestituisci = new Button(shlCarSharing, SWT.NONE);
+		btnRestituisci.setVisible(false);
 		btnRestituisci.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -373,7 +390,6 @@ public class Main {
 		});
 		btnRestituisci.setBounds(431, 598, 75, 25);
 		btnRestituisci.setText("Restituisci");
-		btnRestituisci.setVisible(false);
 
 		Label lblAutoDisponibili = new Label(shlCarSharing, SWT.BORDER | SWT.WRAP | SWT.CENTER);
 		lblAutoDisponibili.setText("Auto disponibili");
@@ -389,18 +405,26 @@ public class Main {
 		btnRefresh.setBounds(649, 683, 75, 25);
 		btnRefresh.setText("Refresh");
 
+		Label lblElencoNoleggi_1 = new Label(shlCarSharing, SWT.BORDER | SWT.WRAP | SWT.SHADOW_IN | SWT.CENTER);
+		lblElencoNoleggi_1.setAlignment(SWT.CENTER);
+		lblElencoNoleggi_1.setBounds(280, 216, 161, 32);
+		lblElencoNoleggi_1.setText("ELENCO NOLEGGI");
+
 		// String changedUserString = userString.replace("'","''");
 
 	}
 
 	private void refresh() {
-		a = con.getA();
-		s = con.getS();
-		n = con.getN();
+		try {
+			con.Connection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 		list.removeAll();
 		list_1.removeAll();
 		list_2.removeAll();
+		list_autolibere.removeAll();
 
 		for (int i = 0; i < con.s.size(); i++) {
 			list.add(con.s.get(i).cognome + "  " + con.s.get(i).nome);
@@ -413,6 +437,12 @@ public class Main {
 		for (int i = 0; i < con.n.size(); i++) {
 			list_2.add(con.n.get(i).codice + " - " + con.n.get(i).auto.targa + " - " + con.n.get(i).socio.nome);
 
+		}
+		for (int i = 0; i < con.n.size(); i++) {
+			if (con.n.get(i).autoRestituita == false) {
+				list_autolibere
+						.add(con.n.get(i).codice + " - " + con.n.get(i).auto.targa + " - " + con.n.get(i).socio.nome);
+			}
 		}
 	}
 }
