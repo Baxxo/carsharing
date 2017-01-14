@@ -162,7 +162,7 @@ public class Main {
 			}
 		});
 		list_2.setBounds(10, 491, 212, 180);
-		
+
 		list_autolibere = new List(shlCarSharing, SWT.BORDER);
 		list_autolibere.addMouseListener(new MouseAdapter() {
 			@Override
@@ -191,8 +191,6 @@ public class Main {
 		lblSelezionaUn_1.setBounds(352, 95, 139, 31);
 		lblSelezionaUn_1.setText("2. Seleziona un auto\r\ndisponibile");
 
-		
-
 		Label lblSelezionaLa = new Label(shlCarSharing, SWT.CENTER);
 		lblSelezionaLa.setBounds(352, 132, 139, 40);
 		lblSelezionaLa.setText("3. Seleziona la data \r\ninizio e fine noleggio\r\n");
@@ -214,7 +212,6 @@ public class Main {
 		DateTime dateTime_1 = new DateTime(shlCarSharing, SWT.BORDER);
 
 		dateTime_1.setBounds(482, 178, 80, 24);
-
 
 		btnNuovoNoleggio = new Button(shlCarSharing, SWT.NONE);
 		btnNuovoNoleggio.setVisible(false);
@@ -243,11 +240,7 @@ public class Main {
 					boolean rest = false;
 					Noleggio noleg = new Noleggio(posS, a.get(posA), s.get(posS), dataN, dataM, rest, posA);
 					n.add(noleg);
-					list_2.removeAll();
-					for (int i = 0; i < con.n.size(); i++) {
-						list_2.add(con.n.get(i).codice + " - " + con.n.get(i).auto.targa + " - "
-								+ con.n.get(i).socio.nome);
-					}
+					refresh();
 					try {
 						con.nuovoNoleggio(a.get(posA), s.get(posS), dataN, dataM);
 					} catch (IOException e1) {
@@ -288,11 +281,14 @@ public class Main {
 			public void widgetSelected(SelectionEvent e) {
 				lblNomeSocio.setText("Nome Socio: " + list.getItem(list.getSelectionIndex()));
 				list_3.removeAll();
-				socio.removeAll(socio);
+				//array fatto a posta
+				socio.clear();
+				//vaiabile fatta a posta
 				sociGiusti = list.getSelectionIndex();
+				//System.out.println(s.get(sociGiusti).getCf());
 				for (int i = 0; i < n.size(); i++) {
 					if (s.get(sociGiusti).getCf().equals(n.get(i).socio.getCf())) {
-						// list_3.add(s.get(sociGiusti).nome);
+						list_3.add(s.get(sociGiusti).nome);
 						socio.add(n.get(sociGiusti));
 					}
 				}
@@ -305,7 +301,7 @@ public class Main {
 				}
 				if (socio.size() == 0) {
 					list_3.add("Nessun noleggio!");
-				}else{
+				} else {
 					for (int i = 0; i < socio.size(); i++) {
 						if (socio.get(i).inizio.after(dataInizio)) {
 							list_3.add(socio.get(i).auto.targa + " " + socio.get(i).socio.nome);
