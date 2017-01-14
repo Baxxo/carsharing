@@ -441,7 +441,7 @@ public class Main {
 		for (int i = 0; i < con.n.size(); i++) {
 			if (con.n.get(i).autoRestituita == false) {
 				list_autolibere
-						.add(con.n.get(i).codice + " - " + con.n.get(i).auto.targa + " - " + con.n.get(i).socio.nome);
+						.add(con.n.get(i).codice + " - " + con.n.get(i).auto.targa + " - " + con.n.get(i).auto.modello);
 			}
 		}
 	}
