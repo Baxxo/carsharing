@@ -34,6 +34,8 @@ public class Main {
 	List list_3;
 
 	int posS, posA;
+	Button btnGet;
+	Button btnRestituisci;
 
 	String l;
 	long diff;
@@ -120,6 +122,10 @@ public class Main {
 				posS = list.getSelectionIndex();
 				System.out.println(posS);
 			}
+			@Override
+			public void mouseUp(MouseEvent e) {
+				btnGet.setVisible(true);
+			}
 		});
 		list.setBounds(10, 44, 212, 182);
 
@@ -137,6 +143,10 @@ public class Main {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 				lblSelect.setText(list_2.getItem(list_2.getSelectionIndex()));
+			}
+			@Override
+			public void mouseUp(MouseEvent e) {
+				btnRestituisci.setVisible(true);
 			}
 		});
 		list_2.setBounds(10, 491, 212, 180);
@@ -255,7 +265,7 @@ public class Main {
 		lblInizio.setBounds(276, 233, 165, 15);
 		lblInizio.setText("Inizio");
 
-		Button btnGet = new Button(shlCarSharing, SWT.NONE);
+		btnGet = new Button(shlCarSharing, SWT.NONE);
 		btnGet.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -274,7 +284,7 @@ public class Main {
 				try {
 					dataInizio = df.parse(dateTime.getYear() + "-" + dateTime.getMonth() + 1 + "-" + dateTime.getDay());
 				} catch (ParseException e1) {
-					e1.printStackTrace();
+					System.out.print("Reinserisci data");
 				}
 				for (int i = 0; i < socio.size(); i++) {
 					if (socio.get(i).inizio.after(dataInizio)) {
@@ -282,10 +292,12 @@ public class Main {
 						list_3.add(dataInizio + "");
 					}
 				}
+				btnGet.setVisible(false);
 			}
 		});
 		btnGet.setBounds(566, 285, 75, 25);
 		btnGet.setText("Get");
+		btnGet.setVisible(false);
 
 		Label label_1 = new Label(shlCarSharing, SWT.SEPARATOR | SWT.HORIZONTAL);
 		label_1.setBounds(228, 208, 496, 2);
@@ -306,7 +318,7 @@ public class Main {
 		lblData.setBounds(397, 549, 60, 20);
 		lblData.setText("Data");
 
-		Button btnRestituisci = new Button(shlCarSharing, SWT.NONE);
+		btnRestituisci = new Button(shlCarSharing, SWT.NONE);
 		btnRestituisci.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -352,10 +364,12 @@ public class Main {
 				n.get(index).setAutoRestituita(true);
 				con.restituisciAuto(index);
 				refresh();
+				btnRestituisci.setVisible(false);
 			}
 		});
 		btnRestituisci.setBounds(431, 598, 75, 25);
 		btnRestituisci.setText("Restituisci");
+		btnRestituisci.setVisible(false);
 
 		Label lblAutoDisponibili = new Label(shlCarSharing, SWT.BORDER | SWT.WRAP | SWT.CENTER);
 		lblAutoDisponibili.setText("Auto disponibili");
