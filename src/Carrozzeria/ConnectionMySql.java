@@ -166,10 +166,9 @@ public class ConnectionMySql {
 
 		try {
 			cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/carsharing?user=root&password=");
-			
-			sql = "UPDATE `noleggi` SET `auto_restituita` = 1 WHERE `codice_noleggio`= " + index+1 + ";";			
+			index++;
+			sql = "UPDATE `noleggi` SET `auto_restituita` = 1 WHERE `codice_noleggio`= " + index + ";";			
 			st = cn.createStatement();
-			System.out.println(sql + " fatto!");
 			ru = st.executeUpdate(sql);
 
 		} catch (SQLException e) {

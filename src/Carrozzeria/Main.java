@@ -42,6 +42,7 @@ public class Main {
 	long soldi;
 	public ArrayList<Socio> s = new ArrayList<Socio>();
 	public ArrayList<Auto> a = new ArrayList<Auto>();
+	public ArrayList<Auto> autoDisponibili = new ArrayList<Auto>();
 	public ArrayList<Noleggio> n = new ArrayList<Noleggio>();
 
 	public ArrayList<Noleggio> socio = new ArrayList<Noleggio>();
@@ -240,7 +241,7 @@ public class Main {
 					boolean rest = false;
 					Noleggio noleg = new Noleggio(posS, a.get(posA), s.get(posS), dataN, dataM, rest, posA);
 					n.add(noleg);
-					refresh();
+
 					try {
 						con.nuovoNoleggio(a.get(posA), s.get(posS), dataN, dataM);
 					} catch (IOException e1) {
@@ -250,6 +251,7 @@ public class Main {
 				} else {
 					System.out.println("data finale incorretta");
 				}
+				refresh();
 				t[0] = false;
 				t[1] = false;
 				btnNuovoNoleggio.setVisible(false);
@@ -342,7 +344,7 @@ public class Main {
 				l = "" + l.charAt(0);
 				sociGiusti = Integer.parseInt(l);
 				sociGiusti = sociGiusti - 1;
-				int index = n.get(sociGiusti).getI();
+				int index = (n.get(sociGiusti).getCodice()) - 1;
 
 				// differenza date
 				SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -352,7 +354,6 @@ public class Main {
 				Date date2 = n.get(index).getFine();
 				diff = date2.getTime() - date1.getTime();
 				soldi = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-				System.out.println("Tempo: " + soldi);
 
 				// calcolo ritardo
 				diff = 0;
@@ -366,13 +367,10 @@ public class Main {
 				}
 				diff = date4.getTime() - date3.getTime();
 				ritardo = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-				System.out.println("Ritardo: " + ritardo);
 
 				if (ritardo > 0) {
-					System.out.println("Ritardo: " + ritardo);
 					soldi = (soldi * 50) + (ritardo * 10);
 				} else {
-					System.out.println("Niente ritardo");
 					soldi = soldi * 50;
 				}
 
@@ -420,6 +418,8 @@ public class Main {
 		a = con.getA();
 		n = con.getN();
 
+		autoDisponibili.clear();
+
 		list.removeAll();
 		list_1.removeAll();
 		list_2.removeAll();
@@ -438,10 +438,30 @@ public class Main {
 
 		}
 		for (int i = 0; i < con.n.size(); i++) {
-			if (con.n.get(i).autoRestituita == false) {
-				list_autolibere
-						.add(con.n.get(i).codice + " - " + con.n.get(i).auto.targa + " - " + con.n.get(i).auto.modello);
+			if (con.n.get(i).autoRestituita == true) {
+				Auto a = new Auto(con.n.get(i).auto.targa, con.n.get(i).auto.marca, con.n.get(i).auto.modello, 0, 0);
+				autoDisponibili.add(a);
 			}
 		}
+		//controllare---------------------------------------------------------------------
+		for(int i=0;i<autoDisponibili.size();i++){
+			for(int j=0;j<a.size();j++){
+				if(!(autoDisponibili.get(i).targa.equals(a.get(j).targa))){
+					autoDisponibili.add(a.get(j));
+				}
+			}
+		}
+		for (int i = 0; i < autoDisponibili.size(); i++) {
+			for (int j = 0; j < autoDisponibili.size(); j++) {
+				if (autoDisponibili.get(i).targa.equals(autoDisponibili.get(j).targa)) {
+					autoDisponibili.remove(j);
+					System.out.println("ciao");
+				}
+			}
+		}
+		for (int i = 0; i < autoDisponibili.size(); i++) {
+			list_autolibere.add(autoDisponibili.get(i).targa + " - " + autoDisponibili.get(i).modello);
+		}
+		//---------------------------------------------------------------------
 	}
 }
