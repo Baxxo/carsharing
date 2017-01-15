@@ -27,7 +27,7 @@ public class Main {
 
 	protected Shell shlCarSharing;
 	private ConnectionMySql con = new ConnectionMySql();
-	String select;
+	String select,ci;
 	List list;
 	List list_1;
 	List list_2;
@@ -454,7 +454,6 @@ public class Main {
 		}
 		for (int i = 0; i < autoDisponibili.size(); i++) {
 			System.out.println("i:"+i+" "+autoDisponibili.size());
-			//System.out.println(autoDisponibili.get(i).targa);
 			for (int j = 0; j < autoDisponibili.size(); j++) {
 				if (autoDisponibili.get(i).targa.equals(autoDisponibili.get(j).targa)) {
 					System.out.println(autoDisponibili.size());
@@ -467,13 +466,10 @@ public class Main {
 		//l'ho fatto doppio perchè il contatore non riesce a finire di togliere i duplicati 
 		for (int i = 0; i < autoDisponibili.size(); i++) {
 			System.out.println("i:"+i+" "+autoDisponibili.size());
-			//System.out.println(autoDisponibili.get(i).targa);
 			for (int j = 0; j < autoDisponibili.size(); j++) {
 				if (autoDisponibili.get(i).targa.equals(autoDisponibili.get(j).targa)) {
 					System.out.println(autoDisponibili.size());
-					//System.out.println("ho rimosso il doppione:"+autoDisponibili.get(j).targa);
 					autoDisponibili.remove(j);
-					
 				}
 			}
 		}
