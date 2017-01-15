@@ -400,8 +400,8 @@ public class Main {
 
 		Label lblElencoNoleggi_1 = new Label(shlCarSharing, SWT.BORDER | SWT.WRAP | SWT.SHADOW_IN | SWT.CENTER);
 		lblElencoNoleggi_1.setAlignment(SWT.CENTER);
-		lblElencoNoleggi_1.setBounds(280, 216, 161, 32);
-		lblElencoNoleggi_1.setText("ELENCO NOLEGGI");
+		lblElencoNoleggi_1.setBounds(280, 216, 161, 28);
+		lblElencoNoleggi_1.setText("Elenco Noleggi");
 
 		// String changedUserString = userString.replace("'","''");
 
@@ -444,18 +444,36 @@ public class Main {
 			}
 		}
 		//controllare---------------------------------------------------------------------
-		for(int i=0;i<autoDisponibili.size();i++){
-			for(int j=0;j<a.size();j++){
-				if(!(autoDisponibili.get(i).targa.equals(a.get(j).targa))){
-					autoDisponibili.add(a.get(j));
+		
+		for(int i = 0;i < a.size();i++){
+			for(int j = 0;j < autoDisponibili.size();j++){
+				if(!(autoDisponibili.get(j).targa.equals(a.get(i).targa))){
+					autoDisponibili.add(a.get(i));
 				}
 			}
 		}
 		for (int i = 0; i < autoDisponibili.size(); i++) {
+			System.out.println("i:"+i+" "+autoDisponibili.size());
+			//System.out.println(autoDisponibili.get(i).targa);
 			for (int j = 0; j < autoDisponibili.size(); j++) {
 				if (autoDisponibili.get(i).targa.equals(autoDisponibili.get(j).targa)) {
+					System.out.println(autoDisponibili.size());
+					//System.out.println("ho rimosso il doppione:"+autoDisponibili.get(j).targa);
 					autoDisponibili.remove(j);
-					System.out.println("ciao");
+					
+				}
+			}
+		}
+		//l'ho fatto doppio perchè il contatore non riesce a finire di togliere i duplicati 
+		for (int i = 0; i < autoDisponibili.size(); i++) {
+			System.out.println("i:"+i+" "+autoDisponibili.size());
+			//System.out.println(autoDisponibili.get(i).targa);
+			for (int j = 0; j < autoDisponibili.size(); j++) {
+				if (autoDisponibili.get(i).targa.equals(autoDisponibili.get(j).targa)) {
+					System.out.println(autoDisponibili.size());
+					//System.out.println("ho rimosso il doppione:"+autoDisponibili.get(j).targa);
+					autoDisponibili.remove(j);
+					
 				}
 			}
 		}
