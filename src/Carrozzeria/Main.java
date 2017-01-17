@@ -252,7 +252,6 @@ public class Main {
 				if (dataN.before(dataM)) {
 					// System.out.println("corretto");
 					boolean rest = false;
-					System.out.println(autoDisponibili.get(list_autolibere.getSelectionIndex()));
 					Noleggio noleg = new Noleggio(posS, autoDisponibili.get(list_autolibere.getSelectionIndex()),
 							s.get(list.getSelectionIndex()), dataN, dataM, rest, posA);
 
@@ -268,6 +267,8 @@ public class Main {
 				} else {
 					System.out.println("data finale incorretta");
 				}
+				autoDisponibili.remove(list_autolibere.getSelectionIndex());
+				list_autolibere.remove(list_autolibere.getSelectionIndex());
 
 				refresh();
 				t[0] = false;
