@@ -251,6 +251,7 @@ public class Main {
 				} else {
 					System.out.println("data finale incorretta");
 				}
+				
 				refresh();
 				t[0] = false;
 				t[1] = false;
@@ -439,7 +440,7 @@ public class Main {
 		}
 		for (int i = 0; i < con.n.size(); i++) {
 			if (con.n.get(i).autoRestituita == true) {
-				Auto a = new Auto(con.n.get(i).auto.targa, con.n.get(i).auto.marca, con.n.get(i).auto.modello, 0, 0);
+				Auto a = new Auto(con.n.get(i).auto.targa, con.n.get(i).auto.marca, con.n.get(i).auto.modello, con.a.get(i).costo,i );
 				autoDisponibili.add(a);
 			}
 		}
@@ -463,6 +464,7 @@ public class Main {
 				}
 			}
 		}
+		
 		//l'ho fatto doppio perchè il contatore non riesce a finire di togliere i duplicati 
 		for (int i = 0; i < autoDisponibili.size(); i++) {
 			System.out.println("i:"+i+" "+autoDisponibili.size());
