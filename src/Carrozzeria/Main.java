@@ -27,7 +27,7 @@ public class Main {
 
 	protected Shell shlCarSharing;
 	private ConnectionMySql con = new ConnectionMySql();
-	String select,ci;
+	String select, ci;
 	List list;
 	List list_1;
 	List list_2;
@@ -52,7 +52,7 @@ public class Main {
 	Button btnRestituisci;
 	Button btnNuovoNoleggio;
 
-	Boolean[] t = { false, false };
+	Boolean[] t = { false, false, false };
 
 	/**
 	 * Launch the application.
@@ -124,15 +124,15 @@ public class Main {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 				lblSelect.setText(list.getItem(list.getSelectionIndex()));
-				posS = list.getSelectionIndex();
-				System.out.println(posS);
+				// System.out.println(posS);
 			}
 
 			@Override
 			public void mouseDown(MouseEvent e) {
+				posS = list.getSelectionIndex();
 				btnGet.setVisible(true);
 				t[0] = true;
-				if (t[0] == true && t[1] == true) {
+				if (t[0] == true && t[1] == true && t[2] == true) {
 					btnNuovoNoleggio.setVisible(true);
 				}
 			}
@@ -144,8 +144,12 @@ public class Main {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 				lblSelect.setText(list_1.getItem(list_1.getSelectionIndex()));
-				posA = list_1.getSelectionIndex();
 
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				posA = list_1.getSelectionIndex();
 			}
 		});
 		list_1.setBounds(10, 264, 212, 182);
@@ -169,7 +173,7 @@ public class Main {
 			@Override
 			public void mouseDown(MouseEvent e) {
 				t[1] = true;
-				if (t[0] == true && t[1] == true) {
+				if (t[0] == true && t[1] == true && t[2] == true) {
 					btnNuovoNoleggio.setVisible(true);
 				}
 			}
@@ -211,6 +215,15 @@ public class Main {
 		lblF.setText("f:");
 
 		DateTime dateTime_1 = new DateTime(shlCarSharing, SWT.BORDER);
+		dateTime_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDown(MouseEvent e) {
+				t[2] = true;
+				if (t[0] == true && t[1] == true && t[2] == true) {
+					btnNuovoNoleggio.setVisible(true);
+				}
+			}
+		});
 
 		dateTime_1.setBounds(482, 178, 80, 24);
 
@@ -237,13 +250,17 @@ public class Main {
 					e2.printStackTrace();
 				}
 				if (dataN.before(dataM)) {
-					System.out.println("corretto");
+					// System.out.println("corretto");
 					boolean rest = false;
-					Noleggio noleg = new Noleggio(posS, a.get(posA), s.get(posS), dataN, dataM, rest, posA);
+					System.out.println(autoDisponibili.get(list_autolibere.getSelectionIndex()));
+					Noleggio noleg = new Noleggio(posS, autoDisponibili.get(list_autolibere.getSelectionIndex()),
+							s.get(list.getSelectionIndex()), dataN, dataM, rest, posA);
+
 					n.add(noleg);
 
 					try {
-						con.nuovoNoleggio(a.get(posA), s.get(posS), dataN, dataM);
+						con.nuovoNoleggio(autoDisponibili.get(list_autolibere.getSelectionIndex()),
+								s.get(list.getSelectionIndex()), dataN, dataM);
 					} catch (IOException e1) {
 
 						e1.printStackTrace();
@@ -251,10 +268,11 @@ public class Main {
 				} else {
 					System.out.println("data finale incorretta");
 				}
-				
+
 				refresh();
 				t[0] = false;
 				t[1] = false;
+				t[2] = false;
 				btnNuovoNoleggio.setVisible(false);
 			}
 		});
@@ -290,7 +308,6 @@ public class Main {
 				sociGiusti = list.getSelectionIndex();
 				for (int i = 0; i < n.size(); i++) {
 					if (s.get(sociGiusti).getCf().equals(n.get(i).socio.getCf())) {
-						System.out.println("Ciao");
 						socio.add(n.get(i));
 					}
 				}
@@ -403,9 +420,7 @@ public class Main {
 		lblElencoNoleggi_1.setAlignment(SWT.CENTER);
 		lblElencoNoleggi_1.setBounds(280, 216, 161, 28);
 		lblElencoNoleggi_1.setText("Elenco Noleggi");
-
-		// String changedUserString = userString.replace("'","''");
-
+		
 	}
 
 	private void refresh() {
@@ -434,50 +449,45 @@ public class Main {
 			list_1.add(con.a.get(i).targa + " - " + con.a.get(i).modello);
 		}
 
-		for (int i = 0; i < con.n.size(); i++) {
-			list_2.add(con.n.get(i).codice + " - " + con.n.get(i).auto.targa + " - " + con.n.get(i).socio.nome);
+		for (int i = 0; i < n.size(); i++) {
+			list_2.add(n.get(i).codice + " - " + n.get(i).auto.targa + " - " + n.get(i).socio.nome);
 
 		}
 		for (int i = 0; i < con.n.size(); i++) {
 			if (con.n.get(i).autoRestituita == true) {
-				Auto a = new Auto(con.n.get(i).auto.targa, con.n.get(i).auto.marca, con.n.get(i).auto.modello, con.a.get(i).costo,i );
+				Auto a = new Auto(con.n.get(i).auto.targa, con.n.get(i).auto.marca, con.n.get(i).auto.modello,
+						con.n.get(i).auto.costo, i);
 				autoDisponibili.add(a);
 			}
 		}
-		//controllare---------------------------------------------------------------------
-		
-		for(int i = 0;i < a.size();i++){
-			for(int j = 0;j < autoDisponibili.size();j++){
-				if(!(autoDisponibili.get(j).targa.equals(a.get(i).targa))){
+
+		for (int i = 0; i < a.size(); i++) {
+			for (int j = 0; j < autoDisponibili.size(); j++) {
+				if (!(autoDisponibili.get(j).targa.equals(a.get(i).targa))) {
 					autoDisponibili.add(a.get(i));
 				}
 			}
 		}
+
+
+		for (int i = 0; i < autoDisponibili.size() - 1; i++) {
+			if (autoDisponibili.get(i).equals(autoDisponibili.get(i + 1))) {
+				autoDisponibili.remove(i);
+				i--;
+			}
+		}
+
 		for (int i = 0; i < autoDisponibili.size(); i++) {
-			System.out.println("i:"+i+" "+autoDisponibili.size());
 			for (int j = 0; j < autoDisponibili.size(); j++) {
 				if (autoDisponibili.get(i).targa.equals(autoDisponibili.get(j).targa)) {
-					System.out.println(autoDisponibili.size());
-					//System.out.println("ho rimosso il doppione:"+autoDisponibili.get(j).targa);
 					autoDisponibili.remove(j);
-					
+
 				}
 			}
 		}
-		
-		//l'ho fatto doppio perchè il contatore non riesce a finire di togliere i duplicati 
-		for (int i = 0; i < autoDisponibili.size(); i++) {
-			System.out.println("i:"+i+" "+autoDisponibili.size());
-			for (int j = 0; j < autoDisponibili.size(); j++) {
-				if (autoDisponibili.get(i).targa.equals(autoDisponibili.get(j).targa)) {
-					System.out.println(autoDisponibili.size());
-					autoDisponibili.remove(j);
-				}
-			}
-		}
+
 		for (int i = 0; i < autoDisponibili.size(); i++) {
 			list_autolibere.add(autoDisponibili.get(i).targa + " - " + autoDisponibili.get(i).modello);
 		}
-		//---------------------------------------------------------------------
 	}
 }

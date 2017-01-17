@@ -106,6 +106,8 @@ public class ConnectionMySql {
 			System.out.println("errore:" + e.getMessage());
 		}
 
+		
+
 	}// fine main
 
 	public void nuovoNoleggio(Auto a, Socio s, java.util.Date dataN, java.util.Date dataM) throws IOException {
@@ -163,11 +165,10 @@ public class ConnectionMySql {
 			System.err.println(e.getMessage());
 		} // fine try-catch
 
-
 		try {
 			cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/carsharing?user=root&password=");
 			index++;
-			sql = "UPDATE `noleggi` SET `auto_restituita` = 1 WHERE `codice_noleggio`= " + index + ";";			
+			sql = "UPDATE `noleggi` SET `auto_restituita` = 1 WHERE `codice_noleggio`= " + index + ";";
 			st = cn.createStatement();
 			ru = st.executeUpdate(sql);
 
