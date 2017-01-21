@@ -456,9 +456,14 @@ public class Main {
 		for (int i = 0; i < a.size(); i++) {
 			at.add(a.get(i));
 		}
+		autoLibere();
+		
+	}
+	
+	public void autoLibere(){
 		int l = 0;
 
-		//toglie le auto quando noleggiate ma va in out of bound
+		//toglie le auto 
 		for (int i = 0; i < at.size(); i++) {
 			l = 0;
 			for (int j = 0; j < n.size(); j++) {
