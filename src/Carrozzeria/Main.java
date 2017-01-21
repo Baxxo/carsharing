@@ -95,24 +95,29 @@ public class Main {
 		}
 
 		shlCarSharing = new Shell();
+		shlCarSharing.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
 		shlCarSharing.setSize(750, 756);
 		shlCarSharing.setText("Car Sharing");
 
 		Label lblSelect = new Label(shlCarSharing, SWT.BORDER | SWT.WRAP | SWT.SHADOW_IN | SWT.CENTER);
+		lblSelect.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		lblSelect.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.BOLD));
 		lblSelect.setBounds(10, 677, 212, 31);
 
 		Label lblElencoSoci = new Label(shlCarSharing, SWT.BORDER | SWT.WRAP | SWT.SHADOW_IN | SWT.CENTER);
+		lblElencoSoci.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		lblElencoSoci.setAlignment(SWT.CENTER);
 		lblElencoSoci.setBounds(10, 10, 212, 28);
 		lblElencoSoci.setText("Elenco soci");
 
 		Label lblElencoAuto = new Label(shlCarSharing, SWT.BORDER | SWT.WRAP | SWT.SHADOW_IN | SWT.CENTER);
+		lblElencoAuto.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		lblElencoAuto.setText("Elenco auto");
 		lblElencoAuto.setAlignment(SWT.CENTER);
 		lblElencoAuto.setBounds(10, 232, 212, 28);
 
 		Label lblElencoNoleggi = new Label(shlCarSharing, SWT.BORDER | SWT.WRAP | SWT.CENTER);
+		lblElencoNoleggi.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		lblElencoNoleggi.setText("Elenco noleggi");
 		lblElencoNoleggi.setAlignment(SWT.CENTER);
 		lblElencoNoleggi.setBounds(10, 452, 212, 26);
@@ -184,20 +189,24 @@ public class Main {
 		refresh();
 
 		Label lblSelezionaUn = new Label(shlCarSharing, SWT.CENTER);
+		lblSelezionaUn.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		lblSelezionaUn.setAlignment(SWT.CENTER);
 		lblSelezionaUn.setBounds(352, 66, 139, 28);
 		lblSelezionaUn.setText("1. Seleziona un socio");
 
 		Label lblNoleggiare = new Label(shlCarSharing, SWT.BORDER | SWT.WRAP | SWT.CENTER);
+		lblNoleggiare.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		lblNoleggiare.setBounds(352, 10, 139, 28);
 		lblNoleggiare.setText("Noleggiare auto");
 
 		Label lblSelezionaUn_1 = new Label(shlCarSharing, SWT.NONE);
+		lblSelezionaUn_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		lblSelezionaUn_1.setAlignment(SWT.CENTER);
 		lblSelezionaUn_1.setBounds(352, 95, 139, 31);
 		lblSelezionaUn_1.setText("2. Seleziona un auto\r\ndisponibile");
 
 		Label lblSelezionaLa = new Label(shlCarSharing, SWT.CENTER);
+		lblSelezionaLa.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		lblSelezionaLa.setBounds(352, 132, 139, 40);
 		lblSelezionaLa.setText("3. Seleziona la data \r\ninizio e fine noleggio\r\n");
 
@@ -205,12 +214,14 @@ public class Main {
 		dateTime_2.setBounds(377, 178, 80, 24);
 
 		Label lblI = new Label(shlCarSharing, SWT.NONE);
+		lblI.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		lblI.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
 		lblI.setAlignment(SWT.CENTER);
 		lblI.setBounds(352, 178, 19, 24);
 		lblI.setText("i:");
 
 		Label lblF = new Label(shlCarSharing, SWT.NONE);
+		lblF.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		lblF.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
 		lblF.setBounds(463, 178, 13, 24);
 		lblF.setText("f:");
@@ -229,7 +240,6 @@ public class Main {
 		dateTime_1.setBounds(482, 178, 80, 24);
 
 		btnNuovoNoleggio = new Button(shlCarSharing, SWT.NONE);
-		btnNuovoNoleggio.setVisible(false);
 		btnNuovoNoleggio.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -282,6 +292,7 @@ public class Main {
 		label.setBounds(228, 10, 2, 722);
 
 		Label lblNomeSocio = new Label(shlCarSharing, SWT.NONE);
+		lblNomeSocio.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		lblNomeSocio.setAlignment(SWT.CENTER);
 		lblNomeSocio.setBounds(463, 233, 257, 15);
 		lblNomeSocio.setText("Nome Socio");
@@ -290,6 +301,7 @@ public class Main {
 		dateTime.setBounds(276, 285, 165, 24);
 
 		Label lblInizio = new Label(shlCarSharing, SWT.NONE);
+		lblInizio.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		lblInizio.setAlignment(SWT.CENTER);
 		lblInizio.setBounds(276, 268, 165, 15);
 		lblInizio.setText("Inizio");
@@ -340,6 +352,7 @@ public class Main {
 		label_2.setBounds(228, 514, 492, 2);
 
 		Label lblImporto = new Label(shlCarSharing, SWT.NONE);
+		lblImporto.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		lblImporto.setAlignment(SWT.CENTER);
 		lblImporto.setBounds(377, 664, 185, 15);
 		lblImporto.setText("Importo");
@@ -348,7 +361,8 @@ public class Main {
 		dateTime_3.setBounds(463, 545, 80, 24);
 
 		Label lblData = new Label(shlCarSharing, SWT.SHADOW_NONE | SWT.RIGHT);
-		lblData.setAlignment(SWT.RIGHT);
+		lblData.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		lblData.setAlignment(SWT.CENTER);
 		lblData.setBounds(397, 549, 60, 20);
 		lblData.setText("Data");
 
@@ -402,6 +416,7 @@ public class Main {
 		btnRestituisci.setText("Restituisci");
 
 		Label lblAutoDisponibili = new Label(shlCarSharing, SWT.BORDER | SWT.WRAP | SWT.CENTER);
+		lblAutoDisponibili.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		lblAutoDisponibili.setText("Auto disponibili");
 		lblAutoDisponibili.setBounds(581, 10, 139, 28);
 
@@ -416,6 +431,7 @@ public class Main {
 		btnRefresh.setText("Refresh");
 
 		Label lblElencoNoleggi_1 = new Label(shlCarSharing, SWT.BORDER | SWT.WRAP | SWT.SHADOW_IN | SWT.CENTER);
+		lblElencoNoleggi_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		lblElencoNoleggi_1.setAlignment(SWT.CENTER);
 		lblElencoNoleggi_1.setBounds(280, 216, 161, 28);
 		lblElencoNoleggi_1.setText("Elenco Noleggi");
