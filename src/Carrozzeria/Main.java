@@ -434,6 +434,7 @@ public class Main {
 		n = con.getN();
 
 		autoDisponibili.clear();
+		at.clear();
 
 		list.removeAll();
 		list_1.removeAll();
