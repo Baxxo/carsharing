@@ -43,6 +43,7 @@ public class Main {
 	public ArrayList<Socio> s = new ArrayList<Socio>();
 	public ArrayList<Auto> a = new ArrayList<Auto>();
 	public ArrayList<Auto> autoDisponibili = new ArrayList<Auto>();
+	public ArrayList<Auto> at = new ArrayList<Auto>();
 	public ArrayList<Noleggio> n = new ArrayList<Noleggio>();
 
 	public ArrayList<Noleggio> socio = new ArrayList<Noleggio>();
@@ -249,11 +250,10 @@ public class Main {
 
 					e2.printStackTrace();
 				}
+
 				if (dataN.before(dataM)) {
-					// System.out.println("corretto");
-					boolean rest = false;
 					Noleggio noleg = new Noleggio(posS, autoDisponibili.get(list_autolibere.getSelectionIndex()),
-							s.get(list.getSelectionIndex()), dataN, dataM, rest, posA);
+							s.get(list.getSelectionIndex()), dataN, dataM, false, posA);
 
 					n.add(noleg);
 
@@ -267,8 +267,6 @@ public class Main {
 				} else {
 					System.out.println("data finale incorretta");
 				}
-				autoDisponibili.remove(list_autolibere.getSelectionIndex());
-				list_autolibere.remove(list_autolibere.getSelectionIndex());
 
 				refresh();
 				t[0] = false;
@@ -421,7 +419,7 @@ public class Main {
 		lblElencoNoleggi_1.setAlignment(SWT.CENTER);
 		lblElencoNoleggi_1.setBounds(280, 216, 161, 28);
 		lblElencoNoleggi_1.setText("Elenco Noleggi");
-		
+
 	}
 
 	private void refresh() {
@@ -454,36 +452,34 @@ public class Main {
 			list_2.add(n.get(i).codice + " - " + n.get(i).auto.targa + " - " + n.get(i).socio.nome);
 
 		}
-		for (int i = 0; i < con.n.size(); i++) {
-			if (con.n.get(i).autoRestituita == true) {
-				Auto a = new Auto(con.n.get(i).auto.targa, con.n.get(i).auto.marca, con.n.get(i).auto.modello,
-						con.n.get(i).auto.costo, i);
-				autoDisponibili.add(a);
-			}
-		}
 
 		for (int i = 0; i < a.size(); i++) {
-			for (int j = 0; j < autoDisponibili.size(); j++) {
-				if (!(autoDisponibili.get(j).targa.equals(a.get(i).targa))) {
-					autoDisponibili.add(a.get(i));
+			at.add(a.get(i));
+		}
+		int l = 0;
+
+		//toglie le auto quando noleggiate ma va in out of bound
+		for (int i = 0; i < at.size(); i++) {
+			l = 0;
+			for (int j = 0; j < n.size(); j++) {
+				if (at.get(i).equals(n.get(j).auto)) {
+					if (n.get(j).autoRestituita == false) {
+						l++;
+					} else {
+					}
+				} else {
 				}
 			}
+			if (l == 0) {
+				System.out.println("aggiunta +1");
+				autoDisponibili.add(a.get(i));
+			}
 		}
-
 
 		for (int i = 0; i < autoDisponibili.size() - 1; i++) {
 			if (autoDisponibili.get(i).equals(autoDisponibili.get(i + 1))) {
 				autoDisponibili.remove(i);
 				i--;
-			}
-		}
-
-		for (int i = 0; i < autoDisponibili.size(); i++) {
-			for (int j = 0; j < autoDisponibili.size(); j++) {
-				if (autoDisponibili.get(i).targa.equals(autoDisponibili.get(j).targa)) {
-					autoDisponibili.remove(j);
-
-				}
 			}
 		}
 
